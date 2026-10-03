@@ -1,0 +1,16 @@
+@extends('admin.layouts.layout')
+@section('title', 'Produit — NutriTrace')
+@section('content')
+<h1 class="h3 mb-4">{{ $product->exists ? 'Modifier le produit' : 'Ajouter un produit' }}</h1>
+@if ($categories->isEmpty())<div class="alert alert-info">Créez une catégorie avant d’ajouter un produit. <a href="{{ route('admin.categories.create') }}">Ajouter une catégorie</a></div>@endif
+<div class="card"><div class="card-body"><form enctype="multipart/form-data" method="POST" action="{{ $product->exists ? route('admin.products.update', $product) : route('admin.products.store') }}">
+@csrf @if ($product->exists) @method('PUT') @endif
+<div class="mb-3"><label for="name" class="form-label">Nom *</label><input id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $product->name) }}" required maxlength="150">@error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror</div>
+<div class="mb-3"><label for="category_id" class="form-label">Catégorie *</label><select id="category_id" name="category_id" class="form-select @error('category_id') is-invalid @enderror" required><option value="">Choisir une catégorie</option>@foreach ($categories as $category)<option value="{{ $category->id }}" @selected(old('category_id', $product->category_id) == $category->id)>{{ $category->name }}</option>@endforeach</select>@error('category_id')<div class="invalid-feedback">{{ $message }}</div>@enderror</div>
+<div class="mb-3"><label for="description" class="form-label">Description *</label><textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror" rows="4" required maxlength="5000">{{ old('description', $product->description) }}</textarea>@error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror</div>
+<div class="mb-3"><label for="price" class="form-label">Prix (TND) *</label><input id="price" name="price" type="number" step="0.01" min="0" max="99999999.99" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $product->price) }}" required>@error('price')<div class="invalid-feedback">{{ $message }}</div>@enderror</div>
+<div class="mb-3"><label for="origin" class="form-label">Origine *</label><input id="origin" name="origin" class="form-control @error('origin') is-invalid @enderror" value="{{ old('origin', $product->origin) }}" required maxlength="150">@error('origin')<div class="invalid-feedback">{{ $message }}</div>@enderror</div>
+<div class="mb-3"><label for="image" class="form-label">Image du produit</label><input id="image" name="image" type="file" accept="image/jpeg,image/png,image/webp" class="form-control @error('image') is-invalid @enderror">@error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror<p class="text-muted mt-2">JPG, PNG ou WebP, maximum 2 Mo. Sans nouvelle image, l’image actuelle est conservée.</p>@if ($product->exists)<img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="width:160px;height:110px;object-fit:contain;background:#f6f7f1;border-radius:8px">@endif</div>
+<button class="btn btn-primary"  @disabled($categories->isEmpty())>Enregistrer</button><a class="btn btn-light" href="{{ route('admin.products.index') }}">Annuler</a>
+</form></div></div>
+@endsection
