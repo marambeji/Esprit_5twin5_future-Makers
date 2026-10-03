@@ -6,7 +6,6 @@
                 @foreach (['home' => 'Accueil', 'about' => 'À propos', 'service' => 'Services', 'catalog.index' => 'Catalogue', 'testimonials' => 'Témoignages', 'blog' => 'Actualités', 'contact' => 'Contact'] as $route => $label)
                 <li><a class="{{ request()->routeIs($route === 'catalog.index' ? 'catalog.*' : $route) ? 'active' : '' }}" href="{{ route($route) }}">{{ $label }}</a></li>
                 @endforeach
-                @auth('admin')<li><a href="{{ route('admin.dashboard') }}">Administration</a></li>@endauth
                 @auth('web')
                 <li class="nutritrace-account"><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="btn btn-outline-success">Déconnexion</button></form></li>
                 @else
