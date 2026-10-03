@@ -1,38 +1,19 @@
-<header class="header-area">
-            <div class="container-fluid">
-               <div class="row d_flex">
-                  <div class=" col-md-2 col-sm-3">
-                     <div class="logo">
-                        <a class="{{ request()->routeIs('home') || request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('home') }}">Nutri<span>trace</span></a>
-                     </div>
-                  </div>
-                  <div class="col-md-8 col-sm-9">
-                     <div class="navbar-area">
-                        <nav class="site-navbar">
-                           <ul>
-                              <li><a class="{{ request()->routeIs('home') || request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
-                              <li><a class="{{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About</a></li>
-                              <li><a class="{{ request()->routeIs('service') ? 'active' : '' }}" href="{{ route('service') }}">Service</a></li>
-                               <li><a class="{{ request()->routeIs('catalog.*') ? 'active' : '' }}" href="{{ route('catalog.index') }}">Catalogue</a></li>
-                                <li><a class="{{ request()->routeIs('testimonials') ? 'active' : '' }}" href="{{ route('testimonials') }}">Testimonail</a></li>
-                              <li><a class="{{ request()->routeIs('blog') ? 'active' : '' }}" href="{{ route('blog') }}">Blog</a></li>
-                              <li><a class="{{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a></li>
-                           </ul>
-                           <button class="nav-toggler" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
-                           <span></span>
-                           </button>
-                        </nav>
-                     </div>
-                  </div>
-                  <div class="col-md-2 padd_0 d_none">
-                     <ul class="email text_align_right">
-                        <li><a href="Javascript:void(0)">Login</a>
-                        </li>
-                        <li><a href="Javascript:void(0)"><i class="fa fa-search" aria-hidden="true"></i>
-                           </a>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-         </header>
+<header class="header-area nutritrace-header">
+    <div class="container-fluid nutritrace-header-inner">
+        <div class="logo"><a href="{{ route('home') }}">Nutri<span>trace</span></a></div>
+        <nav class="site-navbar" aria-label="Navigation principale">
+            <ul id="main-navigation">
+                @foreach (['home' => 'Accueil', 'about' => 'À propos', 'service' => 'Services', 'catalog.index' => 'Catalogue', 'testimonials' => 'Témoignages', 'blog' => 'Actualités', 'contact' => 'Contact'] as $route => $label)
+                <li><a class="{{ request()->routeIs($route === 'catalog.index' ? 'catalog.*' : $route) ? 'active' : '' }}" href="{{ route($route) }}">{{ $label }}</a></li>
+                @endforeach
+                @auth('admin')<li><a href="{{ route('admin.dashboard') }}">Administration</a></li>@endauth
+                @auth('web')
+                <li class="nutritrace-account"><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="btn btn-outline-success">Déconnexion</button></form></li>
+                @else
+                <li class="nutritrace-account"><a href="{{ route('login') }}">Connexion</a></li>
+                @endauth
+            </ul>
+            <button class="nav-toggler" type="button" aria-label="Ouvrir le menu" aria-controls="main-navigation" aria-expanded="false"><span></span></button>
+        </nav>
+    </div>
+</header>

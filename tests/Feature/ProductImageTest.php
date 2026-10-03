@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
+use App\Models\User;
 use Database\Seeders\CatalogSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -12,6 +13,12 @@ use Tests\TestCase;
 class ProductImageTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create(['role' => 'admin']), 'admin');
+    }
 
     public function test_web_photos_match_each_seeded_product_and_uploads_take_priority(): void
     {

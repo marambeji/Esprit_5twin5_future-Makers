@@ -11,7 +11,7 @@
                 @if (!$product->image_path)<figcaption class="small text-muted mt-2">Photo illustrative du produit.</figcaption>@endif
             </figure>
             @if ($credit = $product->image_credit)
-                <p class="small text-muted mt-2">Photo : {{ $credit['author'] }} — <a href="{{ $credit['source'] }}" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="{{ $credit['license_url'] ?: $credit['source'] }}" target="_blank" rel="noopener">{{ $credit['license'] }}</a></p>
+                <p class="small text-muted mt-2">Photo : {{ $credit['author'] }} — <a href="{{ $credit['source'] }}" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="{{ $credit['license_url'] ?: $credit['source'] }}" target="_blank" rel="noopener">{{ $credit['license'] === 'Public domain' ? 'Domaine public' : $credit['license'] }}</a></p>
             @endif
         </div>
         <div class="col-lg-6 pl-lg-4">

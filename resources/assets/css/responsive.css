@@ -232,3 +232,53 @@ line-height: 40px;padding: 46px 21px;
         overflow: visible;
     }
 }
+
+/* NutriTrace navigation: keep logo, links and account in one flexible row. */
+.nutritrace-header.header-area {
+    background: #fff;
+    height: auto;
+}
+.nutritrace-header .nutritrace-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 70px;
+    padding: 0 24px;
+    position: relative;
+}
+.nutritrace-header .logo { flex: 0 0 auto; }
+.nutritrace-header .logo a { white-space: nowrap; }
+.nutritrace-header .site-navbar { min-width: 0; min-height: 70px; }
+.nutritrace-header .site-navbar ul { align-items: center; gap: clamp(10px, 1.3vw, 24px); }
+.nutritrace-header .site-navbar ul li { padding: 0; flex: 0 0 auto; }
+.nutritrace-header .site-navbar ul li a { white-space: nowrap; line-height: 1.5; }
+.nutritrace-header .nutritrace-account form { margin: 0; line-height: 1.5; }
+.nutritrace-header .nutritrace-account button { white-space: nowrap; font-size: 15px; padding: 8px 14px; }
+@media (min-width: 992px) {
+    .nutritrace-header .nav-toggler { display: none; }
+    .nutritrace-header .site-navbar ul,
+    .nutritrace-header .site-navbar ul.open {
+        position: static; flex-direction: row; width: auto;
+        max-height: none; overflow: visible; padding: 0; box-shadow: none;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .nutritrace-header .nutritrace-header-inner { padding: 0 16px; gap: 12px; }
+    .nutritrace-header .logo a { font-size: 20px; }
+    .nutritrace-header .site-navbar ul li a { font-size: 14px; }
+    .nutritrace-header .nutritrace-account button { font-size: 14px; padding: 6px 10px; }
+}
+@media (max-width: 991px) {
+    .nutritrace-header .nav-toggler { display: block; position: static; }
+    .nutritrace-header .site-navbar ul {
+        position: absolute; left: 0; top: 100%; width: 100%;
+        flex-direction: column; align-items: stretch; gap: 0;
+        background: #fff; max-height: 0; overflow: hidden;
+        box-shadow: 0 8px 16px #0002; z-index: 99999;
+    }
+    .nutritrace-header .site-navbar ul.open { max-height: calc(100dvh - 85px); overflow-y: auto; padding: 12px 0; }
+    .nutritrace-header .site-navbar ul li { width: 100%; text-align: left; }
+    .nutritrace-header .site-navbar ul li a { padding: 10px 24px; line-height: 1.5; }
+    .nutritrace-header .nutritrace-account form { padding: 10px 24px; }
+}

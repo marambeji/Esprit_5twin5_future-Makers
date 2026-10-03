@@ -37,7 +37,7 @@ Factories : CategoryFactory et ProductFactory. CatalogSeeder génère cinq caté
 
 Tests : `php artisan test` utilise une base SQLite en mémoire pour vérifier les CRUD, la validation, les relations, le filtrage public et les seeders.
 
-L’administration reste accessible sans authentification pendant ce travail local. La gestion User et la protection des routes doivent être intégrées avec le module commun de l’équipe avant une mise en ligne.
+L’administration est protégée par authentification et rôle administrateur. Le module User est commun à l’équipe.
 # Photos du catalogue
 
 Les 15 photos Wikimedia Commons sont associées aux noms des produits et incluses dans `public/images/products`. Le manifeste `resources/data/product-images.json` conserve les sources, auteurs et licences affichés sur les fiches publiques. Les photos sont illustratives. Les images téléversées dans le CRUD restent prioritaires ; un produit inconnu utilise « Photo à ajouter ».

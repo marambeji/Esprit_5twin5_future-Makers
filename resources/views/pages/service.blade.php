@@ -11,8 +11,8 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="titlepage text_align_left">
-                     <span>What We Do</span>
-                         <h2>SERVICES WE OFFER</h2>
+                     <span>Notre mission</span>
+                         <h2>NOS SERVICES</h2>
                   </div>
                </div>
             </div>
@@ -22,11 +22,11 @@
                      <div  class="services_box text_align_left">
                           <figure><img src="{{ Vite::asset('resources/assets/images/service1.jpg') }}" alt="#"/></figure>
                         <div class="veget">
-                           <h3>FRESH<br>VEGETABLES</h3>
-                           <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
+                           <h3>LÉGUMES<br>FRAIS</h3>
+                           <p>Découvrez les produits, leur catégorie et leur origine. La plateforme permet de consulter les informations disponibles pour mieux comprendre ce que vous consommez.</p>
                         </div>
                      </div>
-                     <a class="read_more" href="{{ route('service') }}">Read More</a>
+                     <a class="read_more" href="{{ route('service') }}">En savoir plus</a>
                   </div>
                </div>
                <div class="col-md-4">
@@ -34,11 +34,11 @@
                      <div  class="services_box text_align_left">
                           <figure><img src="{{ Vite::asset('resources/assets/images/service2.jpg') }}" alt="#"/></figure>
                         <div class="veget">
-                           <h3>AGRICULTURE<br>PRODUCTS</h3>
-                           <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
+                           <h3>PRODUITS<br>AGRICOLES</h3>
+                           <p>Découvrez les produits, leur catégorie et leur origine. La plateforme permet de consulter les informations disponibles pour mieux comprendre ce que vous consommez.</p>
                         </div>
                      </div>
-                     <a class="read_more" href="{{ route('service') }}">Read More</a>
+                     <a class="read_more" href="{{ route('service') }}">En savoir plus</a>
                   </div>
                </div>
                <div class="col-md-4">
@@ -46,11 +46,11 @@
                      <div  class="services_box text_align_left">
                           <figure><img src="{{ Vite::asset('resources/assets/images/service3.jpg') }}" alt="#"/></figure>
                         <div class="veget">
-                           <h3>ORGANIC<br>PRODUCTS</h3>
-                           <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
+                           <h3>PRODUITS<br>BIOLOGIQUES</h3>
+                           <p>Découvrez les produits, leur catégorie et leur origine. La plateforme permet de consulter les informations disponibles pour mieux comprendre ce que vous consommez.</p>
                         </div>
                      </div>
-                     <a class="read_more" href="{{ route('service') }}">Read More</a>
+                     <a class="read_more" href="{{ route('service') }}">En savoir plus</a>
                   </div>
                </div>
             </div>
