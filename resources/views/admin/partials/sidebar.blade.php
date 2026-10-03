@@ -17,4 +17,8 @@
 <li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#environnement" class="sidebar-link"><i class="bi bi-tree-fill"></i><span>Environnement</span></a></li>
 <li class="sidebar-title">Site public</li>
 <li class="sidebar-item"><a href="{{ route('home') }}" class="sidebar-link"><i class="bi bi-house-fill"></i><span>Site public</span></a></li>
+@auth('admin')
+<li class="sidebar-title">Mon compte</li>
+<li class="sidebar-item"><form method="POST" action="{{ route('admin.logout') }}">@csrf<button type="submit" class="sidebar-link border-0 w-100 text-start"><i class="bi bi-box-arrow-right"></i><span>Déconnexion</span></button></form></li>
+@endauth
 </ul></nav></div></div>

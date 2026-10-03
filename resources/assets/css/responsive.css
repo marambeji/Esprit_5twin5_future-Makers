@@ -282,3 +282,24 @@ line-height: 40px;padding: 46px 21px;
     .nutritrace-header .site-navbar ul li a { padding: 10px 24px; line-height: 1.5; }
     .nutritrace-header .nutritrace-account form { padding: 10px 24px; }
 }
+
+/* Catalogue cards share the Agropro service presentation. */
+.catalogue-page .titlepage h1 {
+    color: #999; font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.15; font-weight: 700; text-transform: uppercase;
+    margin-bottom: 16px;
+}
+.catalogue-product { height: 100%; display: flex; flex-direction: column; }
+.catalogue-product .services_box { flex: 1; display: flex; flex-direction: column; margin-top: 0; }
+.catalogue-product .catalogue-product-image {
+    display: block; width: 100%; aspect-ratio: 1 / 1;
+    object-fit: contain; background: #f6f7f1;
+}
+.catalogue-product .veget { flex: 1; margin-top: 0; padding: 32px; z-index: auto; }
+.catalogue-product .catalogue-category { display: block; color: #6b7908; font-weight: 700; margin-bottom: 12px; }
+.catalogue-product h2 { color: #292928; font-size: 28px; line-height: 1.2; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; overflow-wrap: anywhere; }
+.catalogue-product .read_more { flex-shrink: 0; }
+@media (max-width: 991px) {
+    .catalogue-product .veget { padding: 24px; }
+    .catalogue-product h2 { font-size: 23px; }
+}
