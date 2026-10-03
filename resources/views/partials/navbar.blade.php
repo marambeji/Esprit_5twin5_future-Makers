@@ -13,7 +13,7 @@
                               <li><a class="{{ request()->routeIs('home') || request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('home') }}">Home</a></li>
                               <li><a class="{{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About</a></li>
                               <li><a class="{{ request()->routeIs('service') ? 'active' : '' }}" href="{{ route('service') }}">Service</a></li>
-                               <li><a href="Javascript:void(0)">Projects</a></li>
+                               <li><a class="{{ request()->routeIs('catalog.*') ? 'active' : '' }}" href="{{ route('catalog.index') }}">Catalogue</a></li>
                                 <li><a class="{{ request()->routeIs('testimonials') ? 'active' : '' }}" href="{{ route('testimonials') }}">Testimonail</a></li>
                               <li><a class="{{ request()->routeIs('blog') ? 'active' : '' }}" href="{{ route('blog') }}">Blog</a></li>
                               <li><a class="{{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a></li>

@@ -1,4 +1,5 @@
 *.log
+/tmp/product-photos/
 .DS_Store
 .env
 .env.backup
