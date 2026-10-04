@@ -10,7 +10,7 @@
 @include('admin.partials.sidebar')
 <div id="main">
 @include('admin.partials.navbar')
-<main class="page-content">@yield('content')</main>
+<main class="page-content">@include('admin.partials.alerts') @yield('content')</main>
 @include('admin.partials.footer')
 </div></div>
 @vite('resources/mazer/mazer.js')

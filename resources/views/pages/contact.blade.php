@@ -11,29 +11,29 @@
             <div class="row">
                <div class="col-md-12 ">
                   <div class="titlepage text_align_center">
-                     <span>Our Contact</span>
-                     <h2>Requste A Call Back</h2>
+                     <span>Nous contacter</span>
+                     <h2>Contactez notre équipe</h2>
                   </div>
                </div>
                <div class="col-md-8 offset-md-2">
                   <form id="request" class="main_form">
                      <div class="row">
                         <div class="col-md-12 ">
-                           <input class="form_control" placeholder="Your Name" type="type" name=" Name"> 
+                           <input class="form_control" placeholder="Votre nom" type="type" name=" Name">
                         </div>
                         <div class="col-md-12">
-                           <input class="form_control" placeholder="Phone Number" type="type" name="Phone Number">                          
+                           <input class="form_control" placeholder="Numéro de téléphone" type="type" name="Numéro de téléphone">
                         </div>
                           <div class="col-md-12">
-                           <input class="form_control" placeholder="Your Email" type="type" name="Email">                          
+                           <input class="form_control" placeholder="Votre adresse e-mail" type="type" name="Email">
                         </div>
                         <div class="col-md-12">
-                           <input class="textarea" placeholder="Message" type="type" name="message"> 
+                           <input class="textarea" placeholder="Message" type="type" name="message">
                         </div>
                         <div class="col-md-12">
                            <div class="group_btn">
-                           <button class="send_btn">Send</button>
-                            <button class="send_btn">location</button>
+                           <button class="send_btn">Envoyer</button>
+                            <button class="send_btn">Localisation</button>
                          </div>
                         </div>
                      </div>

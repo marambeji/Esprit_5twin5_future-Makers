@@ -5,7 +5,7 @@
 @section('content')
 <div class="d-sm-flex justify-content-between align-items-center mb-4">
     <div><h1 class="h3 mb-2">Tableau de bord NutriTrace</h1><p class="text-muted mb-0">Suivre l’origine des aliments et rendre leurs engagements transparents.</p></div>
-    <a href="{{ route('home') }}" class="btn btn-primary mt-3 mt-sm-0">Consulter le Front Office</a>
+    <a href="{{ route('home') }}" class="btn btn-primary mt-3 mt-sm-0">Consulter le Site public</a>
 </div>
 <div class="row">
     @foreach ([['bi-flower1', 'Origine', 'Identifier le producteur et la région d’origine.'], ['bi-truck', 'Traçabilité', 'Documenter les étapes de transformation et de distribution.'], ['bi-patch-check', 'Certifications', 'Associer les déclarations aux preuves disponibles.'], ['bi-tree', 'Empreinte', 'Présenter les estimations et leur méthode de calcul.']] as [$icon, $label, $description])

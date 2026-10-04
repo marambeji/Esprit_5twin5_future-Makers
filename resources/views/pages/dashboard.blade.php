@@ -17,21 +17,21 @@
                                  <div class="carousel-item active">
                                     <picture>
                                        <source srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" >
-                                     
-                                       <img srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" alt="responsive image" class="d-block img-fluid">
+
+                                       <img srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" alt="Paysage agricole" class="d-block img-fluid">
                                     </picture>
                                     <div class="carousel-caption relative">
-                                       
+
                                     </div>
                                  </div>
                                  <!-- /.carousel-item -->
                                  <div class="carousel-item">
                                     <picture>
-                                     
-                                       <img srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" alt="responsive image" class="d-block img-fluid">
+
+                                       <img srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" alt="Paysage agricole" class="d-block img-fluid">
                                     </picture>
                                     <div class="carousel-caption relative">
-                                       
+
                                     </div>
                                  </div>
                                  <!-- /.carousel-item -->
@@ -40,10 +40,10 @@
                                        <source srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" >
                                        <source srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" >
                                        <source srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" >
-                                       <img srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" alt="responsive image" class="d-block img-fluid">
+                                       <img srcset="{{ Vite::asset('resources/assets/images/banner.jpg') }}" alt="Paysage agricole" class="d-block img-fluid">
                                     </picture>
                                     <div class="carousel-caption relative">
-                                       
+
                                     </div>
                                  </div>
                                  <!-- /.carousel-item -->
@@ -51,18 +51,18 @@
                               <!-- /.carousel-inner -->
                               <a class="carousel-control-prev" href="#banner1" role="button" data-slide="prev">
                               <i class="fa fa-angle-left" aria-hidden="true"></i>
-                              <span class="sr-only">Previous</span>
+                              <span class="sr-only">Précédent</span>
                               </a>
                               <a class="carousel-control-next" href="#banner1" role="button" data-slide="next">
                               <i class="fa fa-angle-right" aria-hidden="true"></i>
-                              <span class="sr-only">Next</span>
+                              <span class="sr-only">Suivant</span>
                               </a>
                            </div>
                            <div class="container-fluid">
                               <div class="row">
                                  <div class="col-md-12">
                                     <div class="willom">
-                                      <h1> Agriculture Fram</h1>
+                                      <h1> De la ferme à l’assiette</h1>
                                     </div>
                                  </div>
                               </div>
@@ -76,10 +76,10 @@
             <div class="row d_flex">
                <div class="col-lg-6 col-md-12">
                   <div class="titlepage text_align_left">
-                     <span>About Us</span>
-                     <h2>AGRICULTURE MARKET</h2>
-                     <p>fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that itfact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that itfact th</p>
-                     <a class="read_more" href="{{ route('about') }}">Learn More</a>
+                     <span>À propos de nous</span>
+                     <h2>UNE ALIMENTATION TRANSPARENTE</h2>
+                     <p>NutriTrace présente le parcours des produits alimentaires, du producteur au consommateur. Notre objectif est de rendre leur origine, leurs certifications et leur empreinte environnementale plus compréhensibles pour vous aider à faire des choix éclairés.</p>
+                     <a class="read_more" href="{{ route('about') }}">En savoir plus</a>
                   </div>
                </div>
                <div class="col-lg-6 col-md-12">
@@ -108,8 +108,8 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="titlepage text_align_left">
-                     <span>What We Do</span>
-                         <h2>SERVICES WE OFFER</h2>
+                     <span>Notre mission</span>
+                         <h2>NOS SERVICES</h2>
                   </div>
                </div>
             </div>
@@ -119,11 +119,11 @@
                      <div  class="services_box text_align_left">
                           <figure><img src="{{ Vite::asset('resources/assets/images/service1.jpg') }}" alt="#"/></figure>
                         <div class="veget">
-                           <h3>FRESH<br>VEGETABLES</h3>
-                           <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
+                           <h3>LÉGUMES<br>FRAIS</h3>
+                           <p>Découvrez les produits, leur catégorie et leur origine. La plateforme permet de consulter les informations disponibles pour mieux comprendre ce que vous consommez.</p>
                         </div>
                      </div>
-                     <a class="read_more" href="{{ route('service') }}">Read More</a>
+                     <a class="read_more" href="{{ route('service') }}">En savoir plus</a>
                   </div>
                </div>
                <div class="col-md-4">
@@ -131,11 +131,11 @@
                      <div  class="services_box text_align_left">
                           <figure><img src="{{ Vite::asset('resources/assets/images/service2.jpg') }}" alt="#"/></figure>
                         <div class="veget">
-                           <h3>AGRICULTURE<br>PRODUCTS</h3>
-                           <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
+                           <h3>PRODUITS<br>AGRICOLES</h3>
+                           <p>Découvrez les produits, leur catégorie et leur origine. La plateforme permet de consulter les informations disponibles pour mieux comprendre ce que vous consommez.</p>
                         </div>
                      </div>
-                     <a class="read_more" href="{{ route('service') }}">Read More</a>
+                     <a class="read_more" href="{{ route('service') }}">En savoir plus</a>
                   </div>
                </div>
                <div class="col-md-4">
@@ -143,11 +143,11 @@
                      <div  class="services_box text_align_left">
                           <figure><img src="{{ Vite::asset('resources/assets/images/service3.jpg') }}" alt="#"/></figure>
                         <div class="veget">
-                           <h3>ORGANIC<br>PRODUCTS</h3>
-                           <p>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
+                           <h3>PRODUITS<br>BIOLOGIQUES</h3>
+                           <p>Découvrez les produits, leur catégorie et leur origine. La plateforme permet de consulter les informations disponibles pour mieux comprendre ce que vous consommez.</p>
                         </div>
                      </div>
-                     <a class="read_more" href="{{ route('service') }}">Read More</a>
+                     <a class="read_more" href="{{ route('service') }}">En savoir plus</a>
                   </div>
                </div>
             </div>
@@ -161,8 +161,8 @@
                <div class="row">
                   <div class="col-sm-12">
                      <div class="titlepage text_align_left">
-                         <span>Our Customers</span>
-                         <h2>TESTIMONAILS</h2>
+                         <span>Exemples de témoignages</span>
+                         <h2>TÉMOIGNAGES</h2>
                      </div>
                   </div>
                </div>
@@ -189,7 +189,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -202,7 +202,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -223,7 +223,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -236,7 +236,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -257,7 +257,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -270,7 +270,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -281,11 +281,11 @@
             </div>
             <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
             <i class="fa fa-angle-left" aria-hidden="true"></i>
-            <span class="sr-only">Previous</span>
+            <span class="sr-only">Précédent</span>
             </a>
             <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
             <i class="fa fa-angle-right" aria-hidden="true"></i>
-            <span class="sr-only">Next</span>
+            <span class="sr-only">Suivant</span>
             </a>
          </div>
       </div>
@@ -296,33 +296,33 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="titlepage text_align_center">
-                     <h2>Whay choose us</h2>
+                     <h2>Pourquoi choisir NutriTrace ?</h2>
                   </div>
                </div>
             </div>
             <div class="row">
                <div class="col-md-3">
                   <div class="point text_align_center">
-                     <h3>300+</h3>
-                     <span>Regula <br>Customers</span>
+                     <h3>01</h3>
+                     <span>Origine des<br>produits</span>
                   </div>
                </div>
                <div class="col-md-3">
                   <div class="point text_align_center">
-                     <h3>30+</h3>
-                     <span>Professional <br>Engineering</span>
+                     <h3>02</h3>
+                     <span>Parcours<br>alimentaire</span>
                   </div>
                </div>
                <div class="col-md-3">
                   <div class="point text_align_center">
-                     <h3>300+</h3>
-                     <span>Points of Sale  <br>Goods</span>
+                     <h3>03</h3>
+                     <span>Certifications<br>et preuves</span>
                   </div>
                </div>
                <div class="col-md-3">
                   <div class="point text_align_center">
-                     <h3>30+</h3>
-                     <span>Awards <br>Won</span>
+                     <h3>04</h3>
+                     <span>Impact<br>environnemental</span>
                   </div>
                </div>
             </div>
@@ -335,8 +335,8 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="titlepage text_align_left">
-                     <span>Our</span>
-                     <h2>Latest News</h2>
+                     <span>Nos actualités</span>
+                     <h2>Dernières actualités</h2>
                   </div>
                </div>
             </div>
@@ -344,33 +344,33 @@
                <div class=" col-md-4">
                   <div class="latest">
                      <figure><img src="{{ Vite::asset('resources/assets/images/news1.jpg') }}" alt="#"/></figure>
-                     <span>15<br>  March</span>
+                     <span>15<br>  Mars</span>
                      <div class="nostrud">
-                        <h3>Alteration in somer</h3>
-                        <p>has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making iteditors </p>
-                        <a class="read_more" href="{{ route('blog') }}">Read More</a>
+                        <h3>Comprendre l’origine des aliments</h3>
+                        <p>De la production à la distribution, chaque étape contribue au parcours d’un aliment. Découvrez les informations à consulter pour comprendre son origine et ses engagements.</p>
+                        <a class="read_more" href="{{ route('blog') }}">En savoir plus</a>
                      </div>
                   </div>
                </div>
                <div class=" col-md-4">
                   <div class="latest box_desho">
                      <figure><img src="{{ Vite::asset('resources/assets/images/news2.jpg') }}" alt="#"/></figure>
-                     <span>15<br> March</span>
+                     <span>15<br> Mars</span>
                      <div class="nostrud">
-                        <h3>Alteration in somer</h3>
-                        <p>has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making iteditors </p>
-                        <a class="read_more" href="{{ route('blog') }}">Read More</a>
+                        <h3>Comprendre l’origine des aliments</h3>
+                        <p>De la production à la distribution, chaque étape contribue au parcours d’un aliment. Découvrez les informations à consulter pour comprendre son origine et ses engagements.</p>
+                        <a class="read_more" href="{{ route('blog') }}">En savoir plus</a>
                      </div>
                   </div>
                </div>
               <div class=" col-md-4">
                   <div class="latest">
                      <figure><img src="{{ Vite::asset('resources/assets/images/news3.jpg') }}" alt="#"/></figure>
-                     <span>15<br> March</span>
+                     <span>15<br> Mars</span>
                      <div class="nostrud">
-                        <h3>Alteration in somer</h3>
-                        <p>has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making iteditors </p>
-                        <a class="read_more" href="{{ route('blog') }}">Read More</a>
+                        <h3>Comprendre l’origine des aliments</h3>
+                        <p>De la production à la distribution, chaque étape contribue au parcours d’un aliment. Découvrez les informations à consulter pour comprendre son origine et ses engagements.</p>
+                        <a class="read_more" href="{{ route('blog') }}">En savoir plus</a>
                      </div>
                   </div>
                </div>
@@ -384,27 +384,27 @@
             <div class="row">
                <div class="col-md-12 ">
                   <div class="titlepage text_align_center">
-                     <span>Our Contact</span>
-                     <h2>Requste A Call Back</h2>
+                     <span>Nous contacter</span>
+                     <h2>Contactez notre équipe</h2>
                   </div>
                </div>
                <div class="col-md-8 offset-md-2">
                   <form id="request" class="main_form">
                      <div class="row">
                         <div class="col-md-12 ">
-                           <input class="form_control" placeholder="Your Name" type="type" name=" Name"> 
+                           <input class="form_control" placeholder="Votre nom" type="type" name=" Name">
                         </div>
                         <div class="col-md-12">
-                           <input class="form_control" placeholder="Phone Number" type="type" name="Phone Number">                          
+                           <input class="form_control" placeholder="Numéro de téléphone" type="type" name="Numéro de téléphone">
                         </div>
-                       
+
                         <div class="col-md-12">
-                           <input class="textarea" placeholder="Message" type="type" name="message"> 
+                           <input class="textarea" placeholder="Message" type="type" name="message">
                         </div>
                         <div class="col-md-12">
                            <div class="group_btn">
-                           <button class="send_btn">Send</button>
-                            <button class="send_btn">location</button>
+                           <button class="send_btn">Envoyer</button>
+                            <button class="send_btn">Localisation</button>
                          </div>
                         </div>
                      </div>

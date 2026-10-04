@@ -12,10 +12,10 @@
             <div class="row d_flex">
                <div class="col-lg-6 col-md-12">
                   <div class="titlepage text_align_left">
-                     <span>About Us</span>
-                     <h2>AGRICULTURE MARKET</h2>
-                     <p>fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that itfact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that itfact th</p>
-                     <a class="read_more" href="{{ route('about') }}">Learn More</a>
+                     <span>À propos de nous</span>
+                     <h2>UNE ALIMENTATION TRANSPARENTE</h2>
+                     <p>NutriTrace présente le parcours des produits alimentaires, du producteur au consommateur. Notre objectif est de rendre leur origine, leurs certifications et leur empreinte environnementale plus compréhensibles pour vous aider à faire des choix éclairés.</p>
+                     <a class="read_more" href="{{ route('about') }}">En savoir plus</a>
                   </div>
                </div>
                <div class="col-lg-6 col-md-12">

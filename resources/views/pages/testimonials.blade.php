@@ -13,8 +13,8 @@
                <div class="row">
                   <div class="col-sm-12">
                      <div class="titlepage text_align_left">
-                         <span>Our Customers</span>
-                         <h2>TESTIMONAILS</h2>
+                         <span>Exemples de témoignages</span>
+                         <h2>TÉMOIGNAGES</h2>
                      </div>
                   </div>
                </div>
@@ -41,7 +41,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -54,7 +54,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -75,7 +75,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -88,7 +88,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -109,7 +109,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -122,7 +122,7 @@
                                       <span>Client</span>
                                     </div>
                                  </div>
-                                  <p>readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their </p>
+                                  <p>Exemple de témoignage : connaître l’origine d’un produit et comprendre les informations qui l’accompagnent aide à choisir ses aliments en toute confiance.</p>
                                   <img src="{{ Vite::asset('resources/assets/images/test.png') }}" alt="#"/>
                               </div>
                            </div>
@@ -133,11 +133,11 @@
             </div>
             <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
             <i class="fa fa-angle-left" aria-hidden="true"></i>
-            <span class="sr-only">Previous</span>
+            <span class="sr-only">Précédent</span>
             </a>
             <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
             <i class="fa fa-angle-right" aria-hidden="true"></i>
-            <span class="sr-only">Next</span>
+            <span class="sr-only">Suivant</span>
             </a>
          </div>
       </div>
