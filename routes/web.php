@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminCertificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CategoryController;
@@ -35,10 +36,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
+    Route::resource('certifications', AdminCertificationController::class);
 });
 Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/catalogue/{product}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::get('/catalogue/{product}/image', [CatalogController::class, 'image'])->name('catalog.image');
 
-Route::resource('certifications', CertificationController::class);
-
+Route::get('/certifications', [CertificationController::class, 'index'])->name('certifications.index');
+Route::get('/certifications/{certification}', [CertificationController::class, 'show'])->name('certifications.show');

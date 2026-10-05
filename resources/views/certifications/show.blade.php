@@ -1,70 +1,75 @@
 @extends('layouts.layout')
 
-@section('title', 'Détails de la Certification — Nutritrace')
+@section('title', $certification->nom . ' — NutriTrace')
 @section('body_class', 'main-layout inner_page')
 
 @section('content')
 <div class="container py-5 mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-9">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="h3 font-weight-bold text-success mb-0">Détails de la Certification</h1>
-                <a href="{{ route('certifications.index') }}" class="btn btn-outline-secondary btn-sm">
-                    &larr; Retour à la liste
+        <div class="col-lg-9">
+            <div class="mb-4">
+                <a href="{{ route('certifications.index') }}" class="btn btn-outline-secondary btn-sm font-weight-bold">
+                    &larr; Retour aux certifications
                 </a>
             </div>
 
             <div class="card border-0 shadow-sm rounded-lg overflow-hidden mb-4">
-                <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <div class="card-header bg-success text-white py-4 px-4 d-flex justify-content-between align-items-center">
                     <div>
-                        <h2 class="h4 font-weight-bold mb-1 text-dark">{{ $certification->nom }}</h2>
-                        <span class="text-muted">Certificat N° <code>{{ $certification->numero_certificat }}</code></span>
+                        <span class="badge badge-light text-success text-uppercase mb-2 font-weight-bold">
+                            {{ $certification->label->nom ?? 'Label Certifié' }}
+                        </span>
+                        <h1 class="h3 font-weight-bold mb-0">{{ $certification->nom }}</h1>
                     </div>
                     <div>
                         @if ($certification->statut === 'valide')
-                            <span class="badge badge-success px-3 py-2 font-weight-normal font-size-base">Statut: Valide</span>
+                            <span class="badge badge-light text-success px-3 py-2 font-weight-bold">Valide</span>
                         @elseif ($certification->statut === 'expiree')
-                            <span class="badge badge-danger px-3 py-2 font-weight-normal font-size-base">Statut: Expirée</span>
+                            <span class="badge badge-danger px-3 py-2 font-weight-bold">Expirée</span>
                         @else
-                            <span class="badge badge-warning px-3 py-2 text-white font-weight-normal font-size-base">Statut: Suspendue</span>
+                            <span class="badge badge-warning text-white px-3 py-2 font-weight-bold">Suspendue</span>
                         @endif
                     </div>
                 </div>
 
-                <div class="card-body p-4">
+                <div class="card-body p-4 p-md-5">
                     <div class="row mb-4">
-                        <div class="col-md-6 mb-3">
-                            <h5 class="text-muted text-uppercase small font-weight-bold mb-2">Informations Générales</h5>
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-success text-uppercase small font-weight-bold mb-3 border-bottom pb-2">
+                                <i class="fa fa-info-circle mr-1"></i> Informations Générales
+                            </h5>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0 d-flex justify-content-between">
-                                    <span class="text-muted">Nom:</span>
-                                    <span class="font-weight-bold">{{ $certification->nom }}</span>
+                                <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Numéro de certificat :</span>
+                                    <code>{{ $certification->numero_certificat }}</code>
                                 </li>
-                                <li class="list-group-item px-0 d-flex justify-content-between">
-                                    <span class="text-muted">Date d'obtention:</span>
-                                    <span>{{ \Carbon\Carbon::parse($certification->date_obtention)->format('d/m/Y') }}</span>
+                                <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Date d'obtention :</span>
+                                    <span class="font-weight-bold">{{ \Carbon\Carbon::parse($certification->date_obtention)->format('d/m/Y') }}</span>
                                 </li>
-                                <li class="list-group-item px-0 d-flex justify-content-between">
-                                    <span class="text-muted">Date d'expiration:</span>
-                                    <span>
+                                <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Date d'expiration :</span>
+                                    <span class="font-weight-bold">
                                         @if ($certification->date_expiration)
                                             {{ \Carbon\Carbon::parse($certification->date_expiration)->format('d/m/Y') }}
                                         @else
-                                            <span class="text-muted">Non définie (indéterminée)</span>
+                                            <span class="text-muted">Indéterminée</span>
                                         @endif
                                     </span>
                                 </li>
                             </ul>
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <h5 class="text-muted text-uppercase small font-weight-bold mb-2">Label Associé</h5>
-                            <div class="p-3 bg-light rounded">
+                        <div class="col-md-6">
+                            <h5 class="text-success text-uppercase small font-weight-bold mb-3 border-bottom pb-2">
+                                <i class="fa fa-tag mr-1"></i> Organisme & Label
+                            </h5>
+                            <div class="p-3 bg-light rounded-lg border">
                                 @if ($certification->label)
-                                    <h6 class="font-weight-bold text-success mb-1">{{ $certification->label->nom }}</h6>
+                                    <h6 class="font-weight-bold text-dark mb-1">{{ $certification->label->nom }}</h6>
                                     @if ($certification->label->organisme)
                                         <p class="text-muted small mb-2">
-                                            <strong>Organisme:</strong> {{ $certification->label->organisme }}
+                                            <strong>Organisme certificateur :</strong> {{ $certification->label->organisme }}
                                         </p>
                                     @endif
                                     @if ($certification->label->description)
@@ -73,33 +78,28 @@
                                         </p>
                                     @endif
                                 @else
-                                    <span class="text-muted">Aucun label associé</span>
+                                    <span class="text-muted">Aucun organisme spécifié</span>
                                 @endif
                             </div>
                         </div>
                     </div>
 
                     @if ($certification->description)
-                        <div class="border-top pt-3 mt-2">
-                            <h5 class="text-muted text-uppercase small font-weight-bold mb-2">Description / Notes</h5>
-                            <p class="text-dark bg-light p-3 rounded mb-0">
+                        <div class="pt-3 border-top">
+                            <h5 class="text-success text-uppercase small font-weight-bold mb-3">
+                                <i class="fa fa-align-left mr-1"></i> Description du certificat
+                            </h5>
+                            <div class="bg-light p-4 rounded-lg text-secondary">
                                 {{ $certification->description }}
-                            </p>
+                            </div>
                         </div>
                     @endif
                 </div>
 
-                <div class="card-footer bg-white py-3 border-top d-flex justify-content-end gap-2">
-                    <a href="{{ route('certifications.edit', $certification) }}" class="btn btn-warning mr-2 text-white font-weight-bold">
-                        Modifier
+                <div class="card-footer bg-light p-3 border-top text-right">
+                    <a href="{{ route('certifications.index') }}" class="btn btn-outline-success font-weight-bold">
+                        &larr; Retour à la liste des certifications
                     </a>
-                    <form method="POST" action="{{ route('certifications.destroy', $certification) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette certification ?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger font-weight-bold">
-                            Supprimer
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
