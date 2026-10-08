@@ -3,7 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FermeController;
+use App\Http\Controllers\FermePublicController;
+use App\Http\Controllers\ProducteurPublicController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProducteurController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureAdmin;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +38,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
+    Route::resource('producteurs', ProducteurController::class);
+    Route::resource('fermes', FermeController::class);
 });
 Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/catalogue/{product}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::get('/catalogue/{product}/image', [CatalogController::class, 'image'])->name('catalog.image');
+
+// Front Office — Producteurs & Fermes (authentifié)
+Route::middleware('auth:web')->group(function () {
+    Route::get('/producteurs', [ProducteurPublicController::class, 'index'])->name('producteurs.index');
+    Route::get('/producteurs/{producteur}', [ProducteurPublicController::class, 'show'])->name('producteurs.show');
+    Route::get('/fermes', [FermePublicController::class, 'index'])->name('fermes.index');
+    Route::get('/fermes/{ferme}', [FermePublicController::class, 'show'])->name('fermes.show');
+});
