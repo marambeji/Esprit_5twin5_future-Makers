@@ -6,7 +6,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DistributorController;
+use App\Http\Controllers\FermeController;
+use App\Http\Controllers\FermePublicController;
+use App\Http\Controllers\ProducteurPublicController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProducteurController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureAdmin;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +43,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('users', UserController::class);
     Route::resource('distributors', DistributorController::class);
     Route::resource('deliveries', DeliveryController::class)->parameters(['deliveries' => 'delivery']);
+    Route::resource('producteurs', ProducteurController::class);
+    Route::resource('fermes', FermeController::class);
 });
 Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/catalogue/{product}', [CatalogController::class, 'show'])->name('catalog.show');
@@ -47,3 +53,11 @@ Route::get('/distributeurs', [DistributionController::class, 'distributors'])->n
 Route::get('/distributeurs/{distributor}', [DistributionController::class, 'distributor'])->name('distributors.show');
 Route::get('/livraisons', [DistributionController::class, 'deliveries'])->name('deliveries.index');
 Route::get('/livraisons/{delivery}', [DistributionController::class, 'delivery'])->name('deliveries.show');
+
+// Front Office — Producteurs & Fermes (authentifié)
+Route::middleware('auth:web')->group(function () {
+    Route::get('/producteurs', [ProducteurPublicController::class, 'index'])->name('producteurs.index');
+    Route::get('/producteurs/{producteur}', [ProducteurPublicController::class, 'show'])->name('producteurs.show');
+    Route::get('/fermes', [FermePublicController::class, 'index'])->name('fermes.index');
+    Route::get('/fermes/{ferme}', [FermePublicController::class, 'show'])->name('fermes.show');
+});
