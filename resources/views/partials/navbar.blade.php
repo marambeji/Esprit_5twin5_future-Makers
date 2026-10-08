@@ -3,7 +3,7 @@
         <div class="logo"><a href="{{ route('home') }}">Nutri<span>trace</span></a></div>
         <nav class="site-navbar" aria-label="Navigation principale">
             <ul id="main-navigation">
-                @foreach (['home' => 'Accueil', 'about' => 'À propos', 'service' => 'Services', 'catalog.index' => 'Catalogue', 'producteurs.index' => 'Producteurs', 'distributors.index' => 'Distributeurs', 'deliveries.index' => 'Livraisons', 'testimonials' => 'Témoignages', 'blog' => 'Actualités', 'contact' => 'Contact'] as $route => $label)
+                @foreach (['home' => 'Accueil', 'about' => 'À propos', 'service' => 'Services', 'catalog.index' => 'Catalogue', 'producteurs.index' => 'Producteurs', 'certifications.index' => 'Certifications', 'distributors.index' => 'Distributeurs', 'deliveries.index' => 'Livraisons', 'testimonials' => 'Témoignages', 'blog' => 'Actualités', 'contact' => 'Contact'] as $route => $label)
                 <li><a class="{{ request()->routeIs($route === 'producteurs.index' ? ['producteurs.*', 'fermes.*'] : (str_ends_with($route, '.index') ? explode('.', $route)[0].'.*' : $route)) ? 'active' : '' }}" href="{{ route($route) }}">{{ $label }}</a></li>
                 @endforeach
                 @auth('web')

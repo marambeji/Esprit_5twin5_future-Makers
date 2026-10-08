@@ -17,7 +17,7 @@
 <li class="sidebar-item {{ request()->routeIs('admin.producteurs.*') ? 'active' : '' }}"><a href="{{ route('admin.producteurs.index') }}" class="sidebar-link"><i class="bi bi-person-lines-fill"></i><span>Producteurs</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.fermes.*') ? 'active' : '' }}"><a href="{{ route('admin.fermes.index') }}" class="sidebar-link"><i class="bi bi-house-door-fill"></i><span>Fermes</span></a></li>
 <li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#parcours" class="sidebar-link"><i class="bi bi-truck"></i><span>Parcours alimentaire</span></a></li>
-<li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#certifications" class="sidebar-link"><i class="bi bi-patch-check-fill"></i><span>Certifications</span></a></li>
+<li class="sidebar-item {{ request()->routeIs('admin.certifications.*') ? 'active' : '' }}"><a href="{{ route('admin.certifications.index') }}" class="sidebar-link"><i class="bi bi-patch-check-fill"></i><span>Certifications</span></a></li>
 <li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#environnement" class="sidebar-link"><i class="bi bi-tree-fill"></i><span>Environnement</span></a></li>
 <li class="sidebar-title">Site public</li>
 <li class="sidebar-item"><a href="{{ route('home') }}" class="sidebar-link"><i class="bi bi-house-fill"></i><span>Site public</span></a></li>

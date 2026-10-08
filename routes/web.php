@@ -1,16 +1,18 @@
 <?php
 
+use App\Http\Controllers\AdminCertificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\FermeController;
 use App\Http\Controllers\FermePublicController;
-use App\Http\Controllers\ProducteurPublicController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProducteurController;
+use App\Http\Controllers\ProducteurPublicController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureAdmin;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +47,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('deliveries', DeliveryController::class)->parameters(['deliveries' => 'delivery']);
     Route::resource('producteurs', ProducteurController::class);
     Route::resource('fermes', FermeController::class);
+    Route::resource('certifications', AdminCertificationController::class);
 });
 Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/catalogue/{product}', [CatalogController::class, 'show'])->name('catalog.show');
@@ -61,3 +64,6 @@ Route::middleware('auth:web')->group(function () {
     Route::get('/fermes', [FermePublicController::class, 'index'])->name('fermes.index');
     Route::get('/fermes/{ferme}', [FermePublicController::class, 'show'])->name('fermes.show');
 });
+
+Route::get('/certifications', [CertificationController::class, 'index'])->name('certifications.index');
+Route::get('/certifications/{certification}', [CertificationController::class, 'show'])->name('certifications.show');
