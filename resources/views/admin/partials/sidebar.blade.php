@@ -12,6 +12,8 @@
 <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><a href="{{ route('admin.dashboard') }}" class="sidebar-link"><i class="bi bi-grid-fill"></i><span>Tableau de bord</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}"><a href="{{ route('admin.categories.index') }}" class="sidebar-link"><i class="bi bi-tags"></i><span>Catégories</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}"><a href="{{ route('admin.products.index') }}" class="sidebar-link"><i class="bi bi-basket"></i><span>Produits</span></a></li>
+<li class="sidebar-item {{ request()->routeIs('admin.distributors.*') ? 'active' : '' }}"><a href="{{ route('admin.distributors.index') }}" class="sidebar-link"><i class="bi bi-shop"></i><span>Distributeurs</span></a></li>
+<li class="sidebar-item {{ request()->routeIs('admin.deliveries.*') ? 'active' : '' }}"><a href="{{ route('admin.deliveries.index') }}" class="sidebar-link"><i class="bi bi-box-seam"></i><span>Livraisons</span></a></li>
 <li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#parcours" class="sidebar-link"><i class="bi bi-truck"></i><span>Parcours alimentaire</span></a></li>
 <li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#certifications" class="sidebar-link"><i class="bi bi-patch-check-fill"></i><span>Certifications</span></a></li>
 <li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#environnement" class="sidebar-link"><i class="bi bi-tree-fill"></i><span>Environnement</span></a></li>

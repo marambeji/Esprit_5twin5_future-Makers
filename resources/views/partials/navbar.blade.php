@@ -3,8 +3,8 @@
         <div class="logo"><a href="{{ route('home') }}">Nutri<span>trace</span></a></div>
         <nav class="site-navbar" aria-label="Navigation principale">
             <ul id="main-navigation">
-                @foreach (['home' => 'Accueil', 'about' => 'À propos', 'service' => 'Services', 'catalog.index' => 'Catalogue', 'testimonials' => 'Témoignages', 'blog' => 'Actualités', 'contact' => 'Contact'] as $route => $label)
-                <li><a class="{{ request()->routeIs($route === 'catalog.index' ? 'catalog.*' : $route) ? 'active' : '' }}" href="{{ route($route) }}">{{ $label }}</a></li>
+                @foreach (['home' => 'Accueil', 'about' => 'À propos', 'service' => 'Services', 'catalog.index' => 'Catalogue', 'distributors.index' => 'Distributeurs', 'deliveries.index' => 'Livraisons', 'testimonials' => 'Témoignages', 'blog' => 'Actualités', 'contact' => 'Contact'] as $route => $label)
+                <li><a class="{{ request()->routeIs(str_ends_with($route, '.index') ? explode('.', $route)[0].'.*' : $route) ? 'active' : '' }}" href="{{ route($route) }}">{{ $label }}</a></li>
                 @endforeach
                 @auth('web')
                 <li class="nutritrace-account"><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="btn btn-outline-success">Déconnexion</button></form></li>

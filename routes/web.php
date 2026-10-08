@@ -3,6 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\DistributionController;
+use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureAdmin;
@@ -34,7 +37,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
+    Route::resource('distributors', DistributorController::class);
+    Route::resource('deliveries', DeliveryController::class)->parameters(['deliveries' => 'delivery']);
 });
 Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/catalogue/{product}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::get('/catalogue/{product}/image', [CatalogController::class, 'image'])->name('catalog.image');
+Route::get('/distributeurs', [DistributionController::class, 'distributors'])->name('distributors.index');
+Route::get('/distributeurs/{distributor}', [DistributionController::class, 'distributor'])->name('distributors.show');
+Route::get('/livraisons', [DistributionController::class, 'deliveries'])->name('deliveries.index');
+Route::get('/livraisons/{delivery}', [DistributionController::class, 'delivery'])->name('deliveries.show');
