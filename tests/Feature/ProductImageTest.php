@@ -30,7 +30,7 @@ class ProductImageTest extends TestCase
             $this->assertNotNull($credit, $product->name);
             $this->assertFileExists(public_path('images/products/'.$credit['file']));
             $this->assertSame(asset('images/products/'.$credit['file']), $product->image_url);
-            $this->get('/catalogue/'.$product->id)->assertOk()->assertSee($credit['source']);
+            $this->get(route('catalog.show', ['product' => $product->slug]))->assertOk()->assertSee($credit['source']);
         }
         $product = $products->first();
         $product->image_path = 'products/custom.jpg';

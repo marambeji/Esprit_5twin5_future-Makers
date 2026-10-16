@@ -7,6 +7,7 @@
                 <li><a class="{{ request()->routeIs($route === 'producteurs.index' ? ['producteurs.*', 'fermes.*'] : (str_ends_with($route, '.index') ? explode('.', $route)[0].'.*' : $route)) ? 'active' : '' }}" href="{{ route($route) }}">{{ $label }}</a></li>
                 @endforeach
                 @auth('web')
+                <li><a href="{{ route('dashboard') }}">Mon compte</a></li>
                 <li class="nutritrace-account"><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="btn btn-outline-success">Déconnexion</button></form></li>
                 @else
                 <li class="nutritrace-account"><a href="{{ route('login') }}">Connexion</a></li>

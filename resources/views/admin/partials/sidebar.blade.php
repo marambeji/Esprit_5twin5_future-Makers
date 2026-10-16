@@ -12,6 +12,7 @@
 <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><a href="{{ route('admin.dashboard') }}" class="sidebar-link"><i class="bi bi-grid-fill"></i><span>Tableau de bord</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}"><a href="{{ route('admin.categories.index') }}" class="sidebar-link"><i class="bi bi-tags"></i><span>Catégories</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}"><a href="{{ route('admin.products.index') }}" class="sidebar-link"><i class="bi bi-basket"></i><span>Produits</span></a></li>
+<li class="sidebar-item {{ request()->routeIs('admin.nutrition.*') ? 'active' : '' }}"><a href="{{ route('admin.nutrition.index') }}" class="sidebar-link"><i class="bi bi-clipboard-data"></i><span>Analyses nutritionnelles</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.distributors.*') ? 'active' : '' }}"><a href="{{ route('admin.distributors.index') }}" class="sidebar-link"><i class="bi bi-shop"></i><span>Distributeurs</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.deliveries.*') ? 'active' : '' }}"><a href="{{ route('admin.deliveries.index') }}" class="sidebar-link"><i class="bi bi-box-seam"></i><span>Livraisons</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.producteurs.*') ? 'active' : '' }}"><a href="{{ route('admin.producteurs.index') }}" class="sidebar-link"><i class="bi bi-person-lines-fill"></i><span>Producteurs</span></a></li>

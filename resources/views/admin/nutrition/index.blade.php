@@ -1,0 +1,10 @@
+@extends('admin.layouts.layout')
+@section('title', 'Analyses nutritionnelles — NutriTrace')
+@section('content')
+<div class="d-flex justify-content-between flex-wrap gap-3 mb-4"><h1 class="h3">Analyses nutritionnelles</h1><a class="btn btn-primary" href="{{ route('admin.nutrition.create') }}">Ajouter une analyse</a></div>
+<form method="GET" class="mb-4"><label for="product_id" class="form-label">Filtrer par produit</label><div class="d-flex gap-2"><select id="product_id" name="product_id" class="form-select"><option value="">Tous les produits</option>@foreach($products as $product)<option value="{{ $product->id }}" @selected(request('product_id') == $product->id)>{{ $product->name }}</option>@endforeach</select><button class="btn btn-primary">Filtrer</button></div></form>
+<div class="card"><div class="card-body"><p class="text-muted">Valeurs pour 100 g de produit.</p><div class="table-responsive"><table class="table"><thead><tr><th>Produit</th><th>Date</th><th>Énergie</th><th>Type de données</th><th>Actions</th></tr></thead><tbody>
+@forelse($analyses as $analysis)<tr><td><a href="{{ route('admin.products.show', $analysis->product_id) }}">{{ $analysis->product_name }}</a></td><td>{{ $analysis->analysed_at->format('d/m/Y') }}</td><td>{{ $analysis->energy_kcal }} kcal</td><td>{{ $analysis->is_demo ? 'Démonstration' : 'Saisie administrateur' }}</td><td><div class="d-flex flex-wrap gap-2"><a class="btn btn-sm btn-outline-primary" href="{{ route('admin.nutrition.show', $analysis) }}">Détails</a><a class="btn btn-sm btn-outline-primary" href="{{ route('admin.nutrition.edit', $analysis) }}">Modifier</a><form method="POST" action="{{ route('admin.nutrition.destroy', $analysis) }}" onsubmit="return confirm('Supprimer cette analyse nutritionnelle ?');">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger">Supprimer</button></form></div></td></tr>
+@empty<tr><td colspan="5">Aucune analyse nutritionnelle.</td></tr>@endforelse
+</tbody></table></div>{{ $analyses->links() }}</div></div>
+@endsection

@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return view('admin.products.show', ['product' => $product->load('category')]);
+        return view('admin.products.show', ['product' => $product->load('category'), 'analyses' => $product->nutritionalAnalyses()->orderByDesc('analysed_at')->orderByDesc('id')->paginate(5)]);
     }
 
     public function edit(Product $product)
@@ -57,6 +57,9 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        if ($product->nutritionalAnalyses()->exists()) {
+            return back()->with('error', 'Ce produit possède des analyses nutritionnelles. Supprimez ou réaffectez ses analyses avant de supprimer le produit.');
+        }
         $image = $product->image_path;
         $product->delete();
         if ($image) {
