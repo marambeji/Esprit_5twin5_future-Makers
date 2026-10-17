@@ -4,11 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Distributor extends Model
 {
-    protected $fillable = ['name', 'email', 'phone', 'city', 'address', 'description'];
+    protected $fillable = ['name', 'email', 'phone', 'city', 'address', 'description', 'user_id', 'actif'];
+
+    protected function casts(): array
+    {
+        return ['actif' => 'boolean'];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function deliveries(): HasMany
     {

@@ -14,6 +14,7 @@
 <li class="sidebar-item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}"><a href="{{ route('admin.products.index') }}" class="sidebar-link"><i class="bi bi-basket"></i><span>Produits</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.nutrition.*') ? 'active' : '' }}"><a href="{{ route('admin.nutrition.index') }}" class="sidebar-link"><i class="bi bi-clipboard-data"></i><span>Analyses nutritionnelles</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.distributors.*') ? 'active' : '' }}"><a href="{{ route('admin.distributors.index') }}" class="sidebar-link"><i class="bi bi-shop"></i><span>Distributeurs</span></a></li>
+<li class="sidebar-item {{ request()->routeIs('admin.commandes.*') ? 'active' : '' }}"><a href="{{ route('admin.commandes.index') }}" class="sidebar-link"><i class="bi bi-cart-check"></i><span>Commandes</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.deliveries.*') ? 'active' : '' }}"><a href="{{ route('admin.deliveries.index') }}" class="sidebar-link"><i class="bi bi-box-seam"></i><span>Livraisons</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.producteurs.*') ? 'active' : '' }}"><a href="{{ route('admin.producteurs.index') }}" class="sidebar-link"><i class="bi bi-person-lines-fill"></i><span>Producteurs</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.fermes.*') ? 'active' : '' }}"><a href="{{ route('admin.fermes.index') }}" class="sidebar-link"><i class="bi bi-house-door-fill"></i><span>Fermes</span></a></li>

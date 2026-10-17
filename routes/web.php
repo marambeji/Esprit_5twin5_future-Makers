@@ -4,10 +4,12 @@ use App\Http\Controllers\AdminCertificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Admin\CommandeAdminController;
 use App\Http\Controllers\CertificationController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\DeliveryController;
-use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DistributorController;
+use App\Http\Controllers\DistributorSpaceController;
 use App\Http\Controllers\FermeController;
 use App\Http\Controllers\FermePublicController;
 use App\Http\Controllers\FoodPhotoController;
@@ -19,6 +21,7 @@ use App\Http\Controllers\ProducteurPublicController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureAdmin;
+use App\Http\Middleware\EnsureDistributor;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.dashboard')->name('home');
@@ -53,6 +56,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('users', UserController::class);
     Route::resource('distributors', DistributorController::class);
     Route::resource('deliveries', DeliveryController::class)->parameters(['deliveries' => 'delivery']);
+    Route::patch('commandes/{commande}/confirmer', [CommandeAdminController::class, 'confirm'])->name('commandes.confirm');
+    Route::patch('commandes/{commande}/refuser', [CommandeAdminController::class, 'refuse'])->name('commandes.refuse');
+    Route::resource('commandes', CommandeAdminController::class);
     Route::resource('producteurs', ProducteurController::class);
     Route::resource('fermes', FermeController::class);
     Route::resource('certifications', AdminCertificationController::class);
@@ -61,10 +67,23 @@ Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.ind
 Route::get('/catalogue/{legacyProduct}', [CatalogController::class, 'legacy'])->whereNumber('legacyProduct');
 Route::get('/catalogue/{product:slug}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::get('/catalogue/{product}/image', [CatalogController::class, 'image'])->name('catalog.image');
-Route::get('/distributeurs', [DistributionController::class, 'distributors'])->name('distributors.index');
-Route::get('/distributeurs/{distributor}', [DistributionController::class, 'distributor'])->name('distributors.show');
-Route::get('/livraisons', [DistributionController::class, 'deliveries'])->name('deliveries.index');
-Route::get('/livraisons/{delivery}', [DistributionController::class, 'delivery'])->name('deliveries.show');
+
+// Espace client : commandes (chaque client ne voit que les siennes).
+Route::middleware('auth:web')->group(function () {
+    Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+    Route::get('/commandes/creer', [CommandeController::class, 'create'])->name('commandes.create');
+    Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
+    Route::post('/commandes/assistant', [CommandeController::class, 'assist'])->middleware('throttle:10,1')->name('commandes.assist');
+    Route::get('/commandes/{commande}', [CommandeController::class, 'show'])->whereNumber('commande')->name('commandes.show');
+    Route::patch('/commandes/{commande}/annuler', [CommandeController::class, 'cancel'])->whereNumber('commande')->name('commandes.cancel');
+});
+
+// Espace distributeur : compte utilisateur lié à un distributeur actif.
+Route::middleware(['auth:web', EnsureDistributor::class])->prefix('espace-distributeur')->name('distributor-space.')->group(function () {
+    Route::get('/livraisons', [DistributorSpaceController::class, 'index'])->name('index');
+    Route::get('/livraisons/{delivery}', [DistributorSpaceController::class, 'show'])->name('show');
+    Route::patch('/livraisons/{delivery}/statut', [DistributorSpaceController::class, 'updateStatus'])->name('status');
+});
 
 // Front Office — Producteurs & Fermes (authentifié)
 Route::middleware('auth:web')->group(function () {
