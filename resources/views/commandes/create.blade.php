@@ -11,7 +11,7 @@
         <button type="button" id="ia_btn" class="btn btn-outline-success">Remplir avec l’IA</button>
         <span id="ia_msg" class="ml-2" role="status"></span>
     </div>
-    <form method="POST" action="{{ route('commandes.store') }}" style="max-width:600px">
+    <form id="commande_form" method="POST" action="{{ route('commandes.store') }}" style="max-width:600px">
         @csrf
         <div class="form-group mb-3"><label for="product_id">Produit *</label>
             <select id="product_id" name="product_id" class="form-control @error('product_id') is-invalid @enderror" required>
@@ -25,6 +25,15 @@
     </form>
 </section>
 <script>
+document.getElementById('commande_form').addEventListener('submit', e => {
+    const sel = document.getElementById('product_id');
+    const msg = `Confirmer la commande ?
+
+Produit : ${sel.options[sel.selectedIndex].text}
+Quantité : ${document.getElementById('quantite').value}
+Adresse : ${document.getElementById('adresse_livraison').value}`;
+    if (!confirm(msg)) e.preventDefault();
+});
 document.getElementById('ia_btn').addEventListener('click', async () => {
     const msg = document.getElementById('ia_msg'), btn = document.getElementById('ia_btn');
     msg.textContent = 'Analyse en cours…'; btn.disabled = true;

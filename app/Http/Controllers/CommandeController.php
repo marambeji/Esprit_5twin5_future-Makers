@@ -13,9 +13,14 @@ class CommandeController extends Controller
 {
     public function index(Request $request)
     {
-        $commandes = Commande::with(['product', 'delivery'])->where('user_id', $request->user()->id)->latest()->paginate(10);
+        $q = trim((string) $request->query('q'));
+        $statut = $request->query('statut');
+        $commandes = Commande::with(['product', 'delivery'])->where('user_id', $request->user()->id)
+            ->when($q !== '', fn ($query) => $query->where(fn ($w) => $w->where('id', 'like', "%{$q}%")->orWhereHas('product', fn ($p) => $p->where('name', 'like', "%{$q}%"))))
+            ->when(array_key_exists($statut, Commande::STATUSES), fn ($query) => $query->where('statut', $statut))
+            ->latest()->paginate(10)->withQueryString();
 
-        return view('commandes.index', compact('commandes'));
+        return view('commandes.index', compact('commandes', 'q', 'statut'));
     }
 
     public function create(Request $request)
@@ -50,7 +55,7 @@ class CommandeController extends Controller
     {
         $this->authorizeOwner($request, $commande);
 
-        return view('commandes.show', ['commande' => $commande->load(['product', 'delivery.distributor'])]);
+        return view('commandes.show', ['commande' => $commande->load(['product', 'delivery.distributor', 'delivery.avis'])]);
     }
 
     public function cancel(Request $request, Commande $commande)

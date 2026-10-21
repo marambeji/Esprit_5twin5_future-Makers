@@ -5,4 +5,13 @@
 <div class="card"><div class="card-body"><p class="mb-1"><strong>Distributeur :</strong> <a href="{{ route('admin.distributors.show', $delivery->distributor) }}">{{ $delivery->distributor->name }}</a></p>
 @if ($delivery->commande)<p class="mb-1"><strong>Commande :</strong> <a href="{{ route('admin.commandes.show', $delivery->commande) }}">{{ $delivery->commande->reference }}</a> — {{ $delivery->commande->user->name }} — {{ $delivery->commande->product->name }} × {{ $delivery->commande->quantite }}</p>@endif
 <p class="mb-1"><strong>Destination :</strong> {{ $delivery->destination }}</p><p class="mb-1"><strong>Date :</strong> {{ $delivery->delivery_date->format('d/m/Y') }}</p><p class="mb-3"><strong>Statut :</strong> {{ $delivery->status_label }}</p><p style="white-space: pre-line">{{ $delivery->notes ?: 'Aucune note.' }}</p><a class="btn btn-primary" href="{{ route('admin.deliveries.edit', $delivery) }}">Modifier</a><a class="btn btn-light" href="{{ route('admin.deliveries.index') }}">Retour</a></div></div>
+@if ($delivery->avis)
+<div class="card mt-4"><div class="card-body">
+<h2 class="h4">Avis du client</h2>
+<p><strong>Note :</strong> {{ $delivery->avis->note }}/5</p>
+<p style="white-space: pre-line">{{ $delivery->avis->commentaire }}</p>
+<p><strong>Analyse IA :</strong> {{ \App\Models\AvisLivraison::SENTIMENTS[$delivery->avis->sentiment] ?? 'Indisponible' }}
+@if ($delivery->avis->theme) — {{ \App\Models\AvisLivraison::THEMES[$delivery->avis->theme] ?? '' }} @endif</p>
+</div></div>
+@endif
 @endsection

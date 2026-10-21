@@ -11,7 +11,7 @@ class DistributorController extends Controller
 {
     public function index(Request $request)
     {
-        $distributors = Distributor::withCount('deliveries')->search($request->query('q'))->orderBy('name')->paginate(10)->withQueryString();
+        $distributors = Distributor::withCount(['deliveries', 'avis'])->withAvg('avis', 'note')->search($request->query('q'))->orderBy('name')->paginate(10)->withQueryString();
 
         return view('admin.distributors.index', compact('distributors'));
     }
@@ -32,7 +32,7 @@ class DistributorController extends Controller
 
     public function show(Distributor $distributor)
     {
-        return view('admin.distributors.show', ['distributor' => $distributor->load('user'), 'deliveries' => $distributor->deliveries()->latest('delivery_date')->paginate(10)]);
+        return view('admin.distributors.show', ['distributor' => $distributor->load('user')->loadCount('avis')->loadAvg('avis', 'note'), 'negativeReviews' => $distributor->avis()->with('delivery')->where('sentiment', 'negatif')->latest('avis_livraisons.created_at')->paginate(10, ['avis_livraisons.*'], 'avis_page'), 'deliveries' => $distributor->deliveries()->latest('delivery_date')->paginate(10)]);
     }
 
     public function edit(Distributor $distributor)

@@ -289,4 +289,16 @@ class DistributionTest extends TestCase
         $this->assertStringContainsString('en cours de livraison', $mails[1]->getOriginalMessage()->getSubject());
         $this->assertStringContainsString($commande->reference, $mails[1]->getOriginalMessage()->getTextBody());
     }
+
+    public function test_suggest_distributor_falls_back_to_same_city_without_ai(): void
+    {
+        config(['nutrition_ai.key' => null]);
+        $this->actingAs($this->admin(), 'admin');
+        $this->distributor(['name' => 'Agro Sfax', 'email' => 's@t.test', 'city' => 'Sfax']);
+        $tunis = $this->distributor();
+        $commande = $this->commande(User::factory()->create(), 'confirmee');
+
+        $this->postJson('/admin/deliveries/suggerer', ['commande_id' => $commande->id])
+            ->assertOk()->assertJson(['distributor_id' => $tunis->id, 'ia' => false]);
+    }
 }

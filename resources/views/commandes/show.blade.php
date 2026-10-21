@@ -22,6 +22,7 @@
     @else
         <p class="mb-3">{{ $commande->statut === 'confirmee' ? 'Votre commande est confirmée, la livraison sera bientôt planifiée.' : 'Aucune livraison pour le moment.' }}</p>
     @endif
+    @include('commandes.partials.avis')
     @if ($commande->isPending())
         <form method="POST" action="{{ route('commandes.cancel', $commande) }}" onsubmit="return confirm('Annuler cette commande ?');">@csrf @method('PATCH')<button class="btn btn-outline-danger">Annuler la commande</button></form>
     @endif

@@ -6,6 +6,7 @@ use App\Services\NutriAI;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Delivery extends Model
 {
@@ -38,6 +39,11 @@ class Delivery extends Model
                     'Votre commande '.$c->reference.' ('.$c->product->name.' x'.$c->quantite.') est '.$label.' (distributeur : '.$delivery->distributor->name.').');
             }
         });
+    }
+
+    public function avis(): HasOne
+    {
+        return $this->hasOne(AvisLivraison::class);
     }
 
     public function distributor(): BelongsTo

@@ -301,7 +301,8 @@ line-height: 40px;padding: 46px 21px;
 .catalogue-product .veget { flex: 1; margin-top: 0; padding: 32px; z-index: auto; }
 .catalogue-product .catalogue-category { display: block; color: #6b7908; font-weight: 700; margin-bottom: 12px; }
 .catalogue-product h2 { color: #292928; font-size: 28px; line-height: 1.2; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; overflow-wrap: anywhere; }
-.catalogue-product .read_more { flex-shrink: 0; }
+.catalogue-product .catalogue-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.catalogue-product .read_more { flex: 1 1 0; min-width: 120px; max-width: none; width: auto; height: 64px; line-height: 64px; }
 @media (max-width: 991px) {
     .catalogue-product .veget { padding: 24px; }
     .catalogue-product h2 { font-size: 23px; }

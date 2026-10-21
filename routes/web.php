@@ -55,6 +55,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('analyses-nutritionnelles', NutritionalAnalysisController::class)->parameters(['analyses-nutritionnelles' => 'analysis'])->names('nutrition');
     Route::resource('users', UserController::class);
     Route::resource('distributors', DistributorController::class);
+    Route::post('deliveries/suggerer', [DeliveryController::class, 'suggest'])->middleware('throttle:10,1')->name('deliveries.suggest');
     Route::resource('deliveries', DeliveryController::class)->parameters(['deliveries' => 'delivery']);
     Route::patch('commandes/{commande}/confirmer', [CommandeAdminController::class, 'confirm'])->name('commandes.confirm');
     Route::patch('commandes/{commande}/refuser', [CommandeAdminController::class, 'refuse'])->name('commandes.refuse');
@@ -70,6 +71,7 @@ Route::get('/catalogue/{product}/image', [CatalogController::class, 'image'])->n
 
 // Espace client : commandes (chaque client ne voit que les siennes).
 Route::middleware('auth:web')->group(function () {
+    Route::post('/livraisons/{delivery}/avis', [\App\Http\Controllers\AvisLivraisonController::class, 'store'])->middleware('throttle:10,1')->name('deliveries.avis.store');
     Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
     Route::get('/commandes/creer', [CommandeController::class, 'create'])->name('commandes.create');
     Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
