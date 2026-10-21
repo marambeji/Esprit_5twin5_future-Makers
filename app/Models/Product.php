@@ -65,4 +65,9 @@ class Product extends Model
     {
         return $this->hasMany(NutritionalAnalysis::class);
     }
+
+    public function transformations(): HasMany
+    {
+        return $this->hasMany(Transformation::class);
+    }
 }

@@ -27,5 +27,6 @@
         </div>
     </div>
 @include('partials.product-nutrition', ['backOffice' => false])
+@include('partials.product-transformations')
 </section>
 @endsection

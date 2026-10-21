@@ -22,6 +22,24 @@
 </div></div></div></div>
 <div class="row">
     <div class="col-md-6 mb-4 stretch-card" id="certifications"><div class="card"><div class="card-body"><h2 class="card-title">Certifications et preuves</h2><p>Bio, local, équitable : chaque déclaration doit préciser sa source et les justificatifs disponibles.</p><div class="d-flex flex-wrap"><span class="badge bg-success me-2 mb-2">Bio</span><span class="badge bg-info me-2 mb-2">Local</span><span class="badge bg-warning text-dark mb-2">Équitable</span></div><p class="text-muted mt-3 mb-0">Ces labels illustrent les catégories du projet ; ils ne certifient aucun produit.</p></div></div></div>
-    <div class="col-md-6 mb-4 stretch-card" id="environnement"><div class="card"><div class="card-body"><h2 class="card-title">Transparence environnementale</h2><p>Pour chaque estimation d’empreinte, indiquer l’unité, le périmètre et la méthode utilisée.</p><p class="text-muted mb-0">Le tableau de bord est prêt à accueillir les données des futurs modules. Aucun indicateur chiffré n’est présenté avant leur intégration.</p></div></div></div>
+    @php
+        $env = \App\Models\Transformation::query()->whereNotNull('co2_kg')->selectRaw('COUNT(*) as n, SUM(co2_kg) as co2, SUM(eau_litres) as eau, SUM(energie_kwh) as kwh, SUM(quantite_kg) as kg')->first();
+        $parScore = \App\Models\Transformation::whereNotNull('eco_score')->selectRaw('eco_score, COUNT(*) as n')->groupBy('eco_score')->pluck('n', 'eco_score');
+        $alertes = \App\Models\Transformation::whereIn('verdict_allegation', ['exageree', 'trompeuse'])->count();
+    @endphp
+    <div class="col-md-6 mb-4 stretch-card" id="environnement"><div class="card"><div class="card-body"><h2 class="card-title">Transparence environnementale</h2>
+        @if ($env->n)
+        <p class="text-muted">Périmètre : étapes de transformation enregistrées ({{ $env->n }}), {{ number_format($env->kg, 0, ',', ' ') }} kg traités.</p>
+        <div class="row text-center mb-3">
+            <div class="col-4"><div class="h4 mb-0">{{ number_format($env->co2, 0, ',', ' ') }}</div><div class="small text-muted">kg CO₂e</div></div>
+            <div class="col-4"><div class="h4 mb-0">{{ number_format($env->eau, 0, ',', ' ') }}</div><div class="small text-muted">litres d’eau</div></div>
+            <div class="col-4"><div class="h4 mb-0">{{ number_format($env->kwh, 0, ',', ' ') }}</div><div class="small text-muted">kWh</div></div>
+        </div>
+        <div class="d-flex align-items-center gap-3 mb-3">@foreach (\App\Models\Transformation::SCORES as $s)<span class="d-inline-flex align-items-center gap-1"><x-eco-score :score="$s" size="sm" /> {{ $parScore[$s] ?? 0 }}</span>@endforeach</div>
+        <p class="mb-0">@if ($alertes)<span class="badge bg-danger">{{ $alertes }} allégation(s) suspecte(s)</span> @endif<a href="{{ route('admin.transformations.index') }}">Voir les transformations</a></p>
+        @else
+        <p>Pour chaque estimation d’empreinte, indiquer l’unité, le périmètre et la méthode utilisée.</p><p class="text-muted mb-0">Aucune transformation avec empreinte n’est encore enregistrée. <a href="{{ route('admin.transformations.create') }}">Ajouter une transformation</a></p>
+        @endif
+    </div></div></div>
 </div>
 @endsection
