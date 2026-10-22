@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'openstreetmap' => [
+        'tiles_url' => env('OPENSTREETMAP_TILES_URL', 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
+    ],
+
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+        'model' => env('GEMINI_VISION_MODEL', 'gemini-3.8-flash'),
+        'fallback_models' => array_filter(array_map('trim', explode(',', env('GEMINI_FALLBACK_MODELS', 'gemini-3.8-flash,gemini-2.5-flash-lite')))),
+        'api_version' => 'v1beta',
+    ],
+
 ];

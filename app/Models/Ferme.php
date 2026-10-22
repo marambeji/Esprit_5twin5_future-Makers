@@ -16,13 +16,25 @@ class Ferme extends Model
         'producteur_id',
         'nom',
         'localisation',
+        'latitude',
+        'longitude',
         'superficie',
         'description',
+        'boundary_geojson',
+        'boundary_area_m2',
+        'boundary_perimeter_m',
     ];
 
     protected function casts(): array
     {
-        return ['superficie' => 'decimal:2'];
+        return [
+            'superficie' => 'decimal:2',
+            'latitude' => 'decimal:7',
+            'longitude' => 'decimal:7',
+            'boundary_geojson' => 'array',
+            'boundary_area_m2' => 'float',
+            'boundary_perimeter_m' => 'float',
+        ];
     }
 
     public function producteur(): BelongsTo

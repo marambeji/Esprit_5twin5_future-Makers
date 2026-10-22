@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminCertificationController;
+use App\Http\Controllers\AgriculturalDashboardController;
+use App\Http\Controllers\AgriculturalAiController;
+use App\Http\Controllers\AgriculturalExportController;
+use App\Http\Controllers\AgriculturalMapController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CategoryController;
@@ -67,6 +71,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('producteurs', ProducteurController::class);
     Route::resource('fermes', FermeController::class);
     Route::resource('labels', LabelController::class);
+    Route::get('agriculture/tableau-de-bord', [AgriculturalDashboardController::class, 'index'])->name('agriculture.dashboard');
+    Route::get('agriculture/carte', [AgriculturalMapController::class, 'index'])->name('agriculture.map');
+    Route::get('producteurs/export/csv', [AgriculturalExportController::class, 'producteurs'])->name('producteurs.export');
+    Route::get('fermes/export/csv', [AgriculturalExportController::class, 'fermes'])->name('fermes.export');
+    Route::post('fermes/{ferme}/assistant', [AgriculturalAiController::class, 'ask'])->middleware('throttle:5,1')->name('fermes.assistant');
+    Route::post('fermes/generer-description', [AgriculturalAiController::class, 'generateDescription'])->middleware('throttle:10,1')->name('fermes.generate-description');
     Route::resource('certifications', AdminCertificationController::class);
     // Module Transformation (Zied)
     Route::resource('transformateurs', TransformateurController::class);
@@ -102,8 +112,14 @@ Route::middleware(['auth:web', EnsureDistributor::class])->prefix('espace-distri
 Route::middleware('auth:web')->group(function () {
     Route::get('/producteurs', [ProducteurPublicController::class, 'index'])->name('producteurs.index');
     Route::get('/producteurs/{producteur}', [ProducteurPublicController::class, 'show'])->name('producteurs.show');
+    Route::get('/fermes/create', [FermePublicController::class, 'create'])->name('fermes.create');
+    Route::post('/fermes', [FermePublicController::class, 'store'])->name('fermes.store');
+    Route::get('/fermes/{ferme}/edit', [FermePublicController::class, 'edit'])->name('fermes.edit');
+    Route::put('/fermes/{ferme}', [FermePublicController::class, 'update'])->name('fermes.update');
+    Route::delete('/fermes/{ferme}', [FermePublicController::class, 'destroy'])->name('fermes.destroy');
+    Route::post('/fermes/generer-description', [AgriculturalAiController::class, 'generateDescription'])->middleware('throttle:10,1')->name('fermes.generate-description');
     Route::get('/fermes', [FermePublicController::class, 'index'])->name('fermes.index');
-    Route::get('/fermes/{ferme}', [FermePublicController::class, 'show'])->name('fermes.show');
+    Route::get('/fermes/{ferme}', [FermePublicController::class, 'show'])->whereNumber('ferme')->name('fermes.show');
 });
 
 Route::get('/certifications', [CertificationController::class, 'index'])->name('certifications.index');
