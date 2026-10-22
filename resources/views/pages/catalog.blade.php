@@ -4,6 +4,7 @@
 @section('content')
 <section class="container py-5 catalogue-page"><div class="titlepage text_align_left"><span>Nos produits</span><h1>Catalogue alimentaire</h1><p>Découvrez les produits et leur origine.</p></div>
 <form method="GET" action="{{ route('catalog.index') }}" class="mb-4"><label for="category">Filtrer par catégorie</label><div class="d-flex"><select id="category" name="category" class="form-control mr-2"><option value="">Toutes les catégories</option>@foreach ($categories as $category)<option value="{{ $category->id }}" @selected(request('category') == $category->id)>{{ $category->name }}</option>@endforeach</select><button class="btn btn-success">Filtrer</button></div>@error('category')<p class="text-danger">{{ $message }}</p>@enderror</form>
+<p class="mb-4"><a class="btn btn-outline-success" href="{{ route('nutrition-basket.index') }}">Composer mon panier nutritionnel</a></p>
 <div class="row">
 @forelse ($products as $product)
     <div class="col-md-4 mb-5">

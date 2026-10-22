@@ -18,6 +18,26 @@
     </div>
     <div id="food-results" class="mt-3"></div>
 </div></div>
+<dialog id="food-reference-dialog" aria-labelledby="food-reference-title" aria-describedby="food-reference-description">
+    <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+        <h2 id="food-reference-title" class="h4 mb-0">Appliquer cette référence ?</h2>
+        <button type="button" id="food-reference-close" class="btn-close" aria-label="Fermer"></button>
+    </div>
+    <p class="small text-muted mb-1">Référence USDA sélectionnée</p>
+    <p id="food-reference-name" class="fw-bold"></p>
+    <p id="food-reference-description">Vérifiez que cette référence correspond à votre produit et à sa préparation.</p>
+    <div class="alert alert-warning">Les valeurs nutritionnelles actuelles du formulaire seront remplacées. Les valeurs manquantes resteront à compléter. Rien ne sera enregistré à cette étape.</div>
+    <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
+        <button type="button" id="food-reference-cancel" class="btn btn-outline-secondary" autofocus>Annuler</button>
+        <button type="button" id="food-reference-apply" class="btn btn-primary">Appliquer la référence</button>
+    </div>
+</dialog>
+@push('styles')
+<style>
+#food-reference-dialog { width: min(560px, calc(100% - 32px)); max-height: 90vh; overflow-y: auto; border: 0; border-radius: 16px; padding: 28px; background: var(--bs-body-bg, #fff); color: var(--bs-body-color, #25396f); box-shadow: 0 20px 60px #0003; }
+#food-reference-dialog::backdrop { background: rgba(20, 30, 50, .55); }
+</style>
+@endpush
 @push('scripts')
 <script>
 (() => {
@@ -26,6 +46,19 @@
     const status = el('food-status'), results = el('food-results');
     const labels = @json(\App\Models\NutritionalAnalysis::NUTRIENTS);
     let previewUrl, busy = false;
+    const referenceDialog = el('food-reference-dialog');
+    function confirmReference(food) {
+        if (referenceDialog.open) return Promise.resolve(false);
+        el('food-reference-name').textContent = food.description;
+        return new Promise(resolve => {
+            referenceDialog.returnValue = 'cancel';
+            referenceDialog.addEventListener('close', () => resolve(referenceDialog.returnValue === 'apply'), {once: true});
+            referenceDialog.showModal();
+        });
+    }
+    el('food-reference-apply').addEventListener('click', () => referenceDialog.close('apply'));
+    ['food-reference-cancel', 'food-reference-close'].forEach(id => el(id).addEventListener('click', () => referenceDialog.close('cancel')));
+    referenceDialog.addEventListener('cancel', event => { event.preventDefault(); referenceDialog.close('cancel'); });
     async function request(url, data) {
         const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 60000);
         try {
@@ -80,13 +113,15 @@
                 const note = document.createElement('p'); note.textContent = food.note;
                 const values = document.createElement('p'); values.textContent = Object.entries(labels).map(([key,label])=>label+' : '+(food.values[key] === null ? 'absent — à compléter' : food.values[key])).join(' ; ');
                 const button = document.createElement('button'); button.type='button'; button.className='btn btn-outline-primary'; button.textContent='Choisir cette référence et remplir le formulaire';
-                button.addEventListener('click',()=>{
+                button.addEventListener('click',async ()=>{
                     if (query !== el('food-query').value.trim() || state !== el('food-state').value || !el('food-confirmed').checked) { status.textContent='Confirmez à nouveau votre sélection et relancez la recherche.'; return; }
-                    if (!confirm('Cette référence correspond-elle bien à votre produit et à sa préparation ? Les valeurs actuelles du formulaire seront remplacées.')) return;
+                    if (!await confirmReference(food)) return;
+                    if (query !== el('food-query').value.trim() || state !== el('food-state').value || !el('food-confirmed').checked) { status.textContent='La sélection a changé. Relancez la recherche.'; return; }
                     Object.keys(labels).forEach(key=>el(key).value=food.values[key] === null ? '' : Math.round(food.values[key]*100)/100);
                     el('reference-token').value=food.token; el('clear-reference').value='0';
                     el('source').value='USDA FoodData Central — FDC '+food.id+' (valeurs de référence)';
                     el('ai-imported').value='1'; el('ai-review').hidden=false; el('ai-reviewed').required=true; el('ai-reviewed').checked=false;
+                    el('ai-reviewed').dispatchEvent(new Event('change', {bubbles:true}));
                     status.textContent='Valeurs de référence appliquées. Vérifiez et complétez les champs, puis confirmez avant d’enregistrer.';
                     el('product-choice').scrollIntoView({behavior:'smooth', block:'center'});
                 });

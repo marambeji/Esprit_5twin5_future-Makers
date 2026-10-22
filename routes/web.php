@@ -74,6 +74,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('transformations', TransformationController::class);
 });
 Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.index');
+Route::get('/panier-nutritionnel', \App\Http\Controllers\NutritionBasketController::class)->name('nutrition-basket.index');
+Route::post('/panier-nutritionnel', \App\Http\Controllers\NutritionBasketController::class)->middleware('throttle:30,1')->name('nutrition-basket.calculate');
 Route::get('/catalogue/{legacyProduct}', [CatalogController::class, 'legacy'])->whereNumber('legacyProduct');
 Route::get('/catalogue/{product:slug}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::get('/catalogue/{product}/image', [CatalogController::class, 'image'])->name('catalog.image');
