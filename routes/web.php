@@ -20,6 +20,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProducteurController;
 use App\Http\Controllers\ProducteurPublicController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransformateurController;
+use App\Http\Controllers\TransformateurPublicController;
+use App\Http\Controllers\TransformationController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureAdmin;
 use App\Http\Middleware\EnsureDistributor;
@@ -65,6 +68,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('fermes', FermeController::class);
     Route::resource('labels', LabelController::class);
     Route::resource('certifications', AdminCertificationController::class);
+    // Module Transformation (Zied)
+    Route::resource('transformateurs', TransformateurController::class);
+    Route::post('transformations/estimer', [TransformationController::class, 'estimate'])->middleware('throttle:10,1')->name('transformations.estimate');
+    Route::resource('transformations', TransformationController::class);
 });
 Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/catalogue/{legacyProduct}', [CatalogController::class, 'legacy'])->whereNumber('legacyProduct');
@@ -101,3 +108,7 @@ Route::get('/certifications', [CertificationController::class, 'index'])->name('
 Route::get('/certifications/{certification}', [CertificationController::class, 'show'])->name('certifications.show');
 Route::get('/certifications/{certification}/qrcode', [CertificationController::class, 'qrcode'])->name('certifications.qrcode');
 Route::get('/certifications/{certification}/document', [CertificationController::class, 'document'])->name('certifications.document');
+
+// Front Office — Transformateurs et empreinte des transformations (public, comme les certifications)
+Route::get('/transformateurs', [TransformateurPublicController::class, 'index'])->name('transformateurs.index');
+Route::get('/transformateurs/{transformateur}', [TransformateurPublicController::class, 'show'])->name('transformateurs.show');
