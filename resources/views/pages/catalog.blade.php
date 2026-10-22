@@ -18,7 +18,10 @@
                     <p class="small text-muted">{{ $product->image_path ? 'Photo du produit' : ($product->image_credit ? 'Photo illustrative du produit' : 'Photo à ajouter') }}</p>
                 </div>
             </div>
-            <a class="read_more" href="{{ route('catalog.show', $product) }}">Voir le produit</a>
+            <div class="catalogue-actions">
+                <a class="read_more" href="{{ route('catalog.show', $product) }}">Voir le produit</a>
+                <a class="read_more" href="{{ route('commandes.create', ['product' => $product->id]) }}">Commander</a>
+            </div>
         </article>
     </div>
 @empty

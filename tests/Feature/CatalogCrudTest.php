@@ -79,7 +79,7 @@ class CatalogCrudTest extends TestCase
         $first = Product::factory()->create(['name' => 'Pommes du verger']);
         Product::factory()->create(['name' => 'Autre aliment']);
         $this->get('/catalogue?category='.$first->category_id)->assertOk()->assertSee('Pommes du verger')->assertDontSee('Autre aliment');
-        $this->get('/catalogue/'.$first->id)->assertOk()->assertSee($first->category->name)->assertSee($first->origin);
+        $this->get(route('catalog.show', ['product' => $first->slug]))->assertOk()->assertSee($first->category->name)->assertSee($first->origin);
     }
 
     public function test_seeder_creates_related_data_without_duplicating_it(): void

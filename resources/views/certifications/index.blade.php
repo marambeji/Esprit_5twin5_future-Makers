@@ -44,6 +44,17 @@
                             </p>
                         @endif
 
+                        <div class="d-flex align-items-center justify-content-between p-2 my-3 bg-light rounded border">
+                            <div class="small text-muted pr-2">
+                                <i class="fa fa-qrcode text-success mr-1"></i>
+                                <strong class="text-dark">QR Code traçabilité</strong><br>
+                                <span class="text-secondary" style="font-size: 0.78rem;">Scannez pour vérifier en direct</span>
+                            </div>
+                            <a href="{{ route('certifications.show', $certification) }}" title="Agrandir le QR Code">
+                                <img src="{{ $certification->qr_code }}" alt="QR Code {{ $certification->numero_certificat }}" class="img-thumbnail bg-white" style="width: 58px; height: 58px; object-fit: contain;">
+                            </a>
+                        </div>
+
                         <div class="border-top pt-3 text-muted small">
                             <div class="d-flex justify-content-between mb-1">
                                 <span>Obtention :</span>

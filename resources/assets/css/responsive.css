@@ -233,7 +233,7 @@ line-height: 40px;padding: 46px 21px;
     }
 }
 
-/* NutriTrace navigation: keep logo, links and account in one flexible row. */
+/* Keep every navigation link accessible when the available width changes. */
 .nutritrace-header.header-area {
     background: #fff;
     height: auto;
@@ -257,11 +257,14 @@ line-height: 40px;padding: 46px 21px;
 .nutritrace-header .nutritrace-account button { white-space: nowrap; font-size: 15px; padding: 8px 14px; }
 @media (min-width: 992px) {
     .nutritrace-header .nav-toggler { display: none; }
+    .nutritrace-header .site-navbar { flex: 1 1 0; justify-content: flex-end; padding: 12px 0; }
     .nutritrace-header .site-navbar ul,
     .nutritrace-header .site-navbar ul.open {
-        position: static; flex-direction: row; width: auto;
+        position: static; flex-direction: row; flex-wrap: wrap; justify-content: flex-end;
+        width: 100%; gap: 10px 16px;
         max-height: none; overflow: visible; padding: 0; box-shadow: none;
     }
+    .nutritrace-header .site-navbar ul li a { font-size: 15px; }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
     .nutritrace-header .nutritrace-header-inner { padding: 0 16px; gap: 12px; }
@@ -298,7 +301,8 @@ line-height: 40px;padding: 46px 21px;
 .catalogue-product .veget { flex: 1; margin-top: 0; padding: 32px; z-index: auto; }
 .catalogue-product .catalogue-category { display: block; color: #6b7908; font-weight: 700; margin-bottom: 12px; }
 .catalogue-product h2 { color: #292928; font-size: 28px; line-height: 1.2; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; overflow-wrap: anywhere; }
-.catalogue-product .read_more { flex-shrink: 0; }
+.catalogue-product .catalogue-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.catalogue-product .read_more { flex: 1 1 0; min-width: 120px; max-width: none; width: auto; height: 64px; line-height: 64px; }
 @media (max-width: 991px) {
     .catalogue-product .veget { padding: 24px; }
     .catalogue-product h2 { font-size: 23px; }

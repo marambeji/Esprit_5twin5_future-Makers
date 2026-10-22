@@ -6,6 +6,8 @@
 <form method="POST" action="{{ route('register.store') }}">@csrf
 @if ($errors->any())<div class="alert alert-danger"><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
 <div class="mb-3"><label for="name">Nom complet</label><input id="name" name="name" class="form-control" value="{{ old('name') }}" required maxlength="255" autocomplete="name"></div>
+<div class="mb-3"><label for="username">Nom d’utilisateur</label><input id="username" name="username" class="form-control" value="{{ old('username') }}" required maxlength="255" autocomplete="username"><small>Lettres sans accents, chiffres, tirets et traits de soulignement.</small></div>
+<div class="mb-3"><label for="phone">Téléphone</label><input id="phone" name="phone" type="tel" class="form-control" value="{{ old('phone') }}" required pattern="[+]?[0-9]{8,15}" autocomplete="tel"><small>8 à 15 chiffres, avec un + facultatif.</small></div>
 <div class="mb-3"><label for="email">Adresse e-mail</label><input id="email" name="email" type="email" class="form-control" value="{{ old('email') }}" required autocomplete="email"></div>
 <div class="mb-3"><label for="password">Mot de passe (8 caractères minimum)</label><input id="password" name="password" type="password" class="form-control" required minlength="8" autocomplete="new-password"></div>
 <div class="mb-4"><label for="password_confirmation">Confirmer le mot de passe</label><input id="password_confirmation" name="password_confirmation" type="password" class="form-control" required autocomplete="new-password"></div>

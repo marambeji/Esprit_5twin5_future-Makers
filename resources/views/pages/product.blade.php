@@ -26,5 +26,6 @@
             <a class="btn btn-outline-success mb-2" href="{{ route('catalog.index') }}">Tous les produits</a>
         </div>
     </div>
+@include('partials.product-nutrition', ['backOffice' => false])
 </section>
 @endsection

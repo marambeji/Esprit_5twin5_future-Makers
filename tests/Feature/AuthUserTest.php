@@ -41,13 +41,13 @@ class AuthUserTest extends TestCase
         $this->post('/admin/login', ['email' => $user->email, 'password' => 'password'])->assertSessionHasErrors('email');
         $this->assertGuest('web');
         $this->assertGuest('admin');
-        $this->post('/login', ['email' => $user->email, 'password' => 'password'])->assertRedirect('/catalogue');
+        $this->post('/login', ['username' => $user->username, 'password' => 'password'])->assertRedirect('/dashboard');
         $this->assertAuthenticatedAs($user, 'web');
     }
 
     public function test_registration_cannot_grant_admin_role(): void
     {
-        $this->post('/register', ['name' => 'Maram', 'email' => 'maram@example.test', 'password' => 'secret123', 'password_confirmation' => 'secret123', 'role' => 'admin'])->assertRedirect('/catalogue');
+        $this->post('/register', ['username' => 'maram', 'phone' => '22123456', 'name' => 'Maram', 'email' => 'maram@example.test', 'password' => 'secret123', 'password_confirmation' => 'secret123', 'role' => 'admin'])->assertRedirect('/dashboard');
         $user = User::where('email', 'maram@example.test')->firstOrFail();
         $this->assertSame('user', $user->role);
         $this->assertTrue(Hash::check('secret123', $user->password));
@@ -71,13 +71,13 @@ class AuthUserTest extends TestCase
         $admin = User::factory()->create(['role' => 'admin']);
         $user = User::factory()->create();
         $this->post('/admin/login', ['email' => $admin->email, 'password' => 'password']);
-        $this->post('/login', ['email' => $user->email, 'password' => 'password'])->assertRedirect('/catalogue');
+        $this->post('/login', ['username' => $user->username, 'password' => 'password'])->assertRedirect('/dashboard');
         $this->get('/')->assertSee('Déconnexion');
         $this->post('/logout')->assertRedirect('/login');
         $this->assertGuest('web');
         $this->assertAuthenticatedAs($admin, 'admin');
         $this->get('/')->assertDontSee('Déconnexion');
-        $this->post('/login', ['email' => $user->email, 'password' => 'password']);
+        $this->post('/login', ['username' => $user->username, 'password' => 'password']);
         $this->post('/admin/logout')->assertRedirect('/admin/login');
         $this->assertGuest('admin');
         $this->assertAuthenticatedAs($user, 'web');
@@ -91,18 +91,18 @@ class AuthUserTest extends TestCase
         $admin = User::factory()->create(['role' => 'admin']);
         $this->actingAs($admin, 'web')->get('/')->assertSee('Connexion')->assertDontSee('Déconnexion');
         $this->assertGuest('web');
-        $this->post('/login', ['email' => $admin->email, 'password' => 'password'])->assertSessionHasErrors('email');
+        $this->post('/login', ['username' => $admin->username, 'password' => 'password'])->assertSessionHasErrors('username');
         $this->assertGuest('web');
         $this->actingAs(User::factory()->create(), 'admin')->get('/admin/users')->assertForbidden();
     }
 
     public function test_repeated_failed_logins_are_limited(): void
     {
-        $data = ['email' => 'limited@example.test', 'password' => 'incorrect'];
+        $data = ['username' => 'limited', 'password' => 'incorrect'];
         for ($i = 0; $i < 5; $i++) {
-            $this->post('/login', $data)->assertSessionHasErrors('email');
+            $this->post('/login', $data)->assertSessionHasErrors('username');
         }
-        $this->post('/login', $data)->assertSessionHas('errors', fn ($errors) => str_starts_with($errors->first('email'), 'Trop de tentatives. Réessayez dans '));
+        $this->post('/login', $data)->assertSessionHas('errors', fn ($errors) => str_starts_with($errors->first('username'), 'Trop de tentatives de connexion. Réessayez dans '));
         $this->assertGuest('web');
         $this->assertGuest('admin');
     }

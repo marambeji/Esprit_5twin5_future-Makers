@@ -16,6 +16,8 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'username' => ['sometimes', 'required', 'alpha_dash:ascii', 'max:255', Rule::unique('users')->ignore($this->route('user'))],
+            'phone' => ['sometimes', 'nullable', 'regex:/^\+?[0-9]{8,15}$/', Rule::unique('users')->ignore($this->route('user'))],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($this->route('user'))],
             'password' => [$this->isMethod('POST') ? 'required' : 'nullable', 'string', 'min:8', 'confirmed'],
             'role' => ['required', Rule::in(['admin', 'user'])],

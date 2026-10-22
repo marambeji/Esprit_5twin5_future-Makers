@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -30,16 +29,6 @@ class AuthController extends Controller
         if ($guard === 'admin') {
             return redirect()->intended(route('admin.dashboard'));
         }
-
-        return to_route('catalog.index');
-    }
-
-    public function register(Request $request)
-    {
-        $data = $request->validate(['name' => ['required', 'string', 'max:255'], 'email' => ['required', 'email', 'max:255', 'unique:users'], 'password' => ['required', 'string', 'min:8', 'confirmed']], [], ['name' => 'nom', 'email' => 'adresse e-mail', 'password' => 'mot de passe']);
-        $user = User::create($data + ['role' => 'user']);
-        Auth::guard('web')->login($user);
-        $request->session()->regenerate();
 
         return to_route('catalog.index');
     }
