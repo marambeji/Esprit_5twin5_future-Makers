@@ -52,6 +52,18 @@
                                 <span class="text-muted">Indéterminée</span>
                             @endif
                         </td>
+                    <tr>
+                        <td class="text-muted">Document joint :</td>
+                        <td>
+                            @if ($certification->has_document)
+                                <a href="{{ $certification->document_url }}" target="_blank" class="badge {{ $certification->is_pdf ? 'bg-danger' : 'bg-success' }} text-decoration-none">
+                                    <i class="bi {{ $certification->is_pdf ? 'bi-file-earmark-pdf-fill' : 'bi-file-earmark-image-fill' }} me-1"></i>
+                                    {{ $certification->is_pdf ? 'Ouvrir le PDF' : 'Voir la Photo' }}
+                                </a>
+                            @else
+                                <span class="text-muted small fst-italic">Aucun document téléversé</span>
+                            @endif
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -60,7 +72,14 @@
                 <h6 class="text-muted text-uppercase small font-weight-bold mb-3">Label Associé</h6>
                 <div class="p-3 bg-light rounded border">
                     @if ($certification->label)
-                        <h6 class="fw-bold text-success mb-1">{{ $certification->label->nom }}</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h6 class="fw-bold text-success mb-0">
+                                <i class="bi bi-award me-1"></i> {{ $certification->label->nom }}
+                            </h6>
+                            <a href="{{ route('admin.labels.show', $certification->label) }}" class="btn btn-sm btn-outline-success py-0 px-2" title="Voir les détails du label">
+                                Voir le label &rarr;
+                            </a>
+                        </div>
                         @if ($certification->label->organisme)
                             <p class="text-muted small mb-2">
                                 <strong>Organisme:</strong> {{ $certification->label->organisme }}
@@ -74,6 +93,33 @@
                     @else
                         <span class="text-muted">Aucun label associé</span>
                     @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <div class="col-12">
+                <div class="p-3 bg-light rounded border d-flex flex-column flex-md-row align-items-center justify-content-between">
+                    <div class="d-flex align-items-center mb-3 mb-md-0">
+                        <div class="p-2 bg-white rounded border me-3">
+                            <img src="{{ $certification->qr_code }}" alt="QR Code" style="width: 100px; height: 100px; object-fit: contain;">
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1"><i class="bi bi-qr-code text-primary me-1"></i> QR Code officiel du certificat</h6>
+                            <p class="text-muted small mb-1">Pointe vers la fiche publique de traçabilité :</p>
+                            <a href="{{ $certification->verification_url }}" target="_blank" class="small text-decoration-none">
+                                {{ $certification->verification_url }} <i class="bi bi-box-arrow-up-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('certifications.qrcode', $certification) }}" class="btn btn-outline-success btn-sm">
+                            <i class="bi bi-download me-1"></i> Télécharger SVG
+                        </a>
+                        <a href="{{ $certification->verification_url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-eye me-1"></i> Voir sur le front
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

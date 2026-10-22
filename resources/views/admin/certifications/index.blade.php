@@ -44,9 +44,15 @@
                                 </a>
                             </td>
                             <td>
-                                <span class="badge bg-info text-dark">
-                                    {{ $certification->label->nom ?? 'N/A' }}
-                                </span>
+                                @if ($certification->label)
+                                    <a href="{{ route('admin.labels.show', $certification->label) }}" class="text-decoration-none" title="Voir les détails du label">
+                                        <span class="badge bg-info text-dark">
+                                            <i class="bi bi-award me-1"></i>{{ $certification->label->nom }}
+                                        </span>
+                                    </a>
+                                @else
+                                    <span class="badge bg-secondary">N/A</span>
+                                @endif
                             </td>
                             <td><code>{{ $certification->numero_certificat }}</code></td>
                             <td>{{ \Carbon\Carbon::parse($certification->date_obtention)->format('d/m/Y') }}</td>

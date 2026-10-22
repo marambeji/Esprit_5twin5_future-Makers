@@ -13,6 +13,7 @@ use App\Http\Controllers\DistributorSpaceController;
 use App\Http\Controllers\FermeController;
 use App\Http\Controllers\FermePublicController;
 use App\Http\Controllers\FoodPhotoController;
+use App\Http\Controllers\LabelController;
 use App\Http\Controllers\NutritionalAnalysisController;
 use App\Http\Controllers\NutritionLabelController;
 use App\Http\Controllers\ProductController;
@@ -62,6 +63,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin', EnsureAdmin::c
     Route::resource('commandes', CommandeAdminController::class);
     Route::resource('producteurs', ProducteurController::class);
     Route::resource('fermes', FermeController::class);
+    Route::resource('labels', LabelController::class);
     Route::resource('certifications', AdminCertificationController::class);
 });
 Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalog.index');
@@ -97,3 +99,5 @@ Route::middleware('auth:web')->group(function () {
 
 Route::get('/certifications', [CertificationController::class, 'index'])->name('certifications.index');
 Route::get('/certifications/{certification}', [CertificationController::class, 'show'])->name('certifications.show');
+Route::get('/certifications/{certification}/qrcode', [CertificationController::class, 'qrcode'])->name('certifications.qrcode');
+Route::get('/certifications/{certification}/document', [CertificationController::class, 'document'])->name('certifications.document');
