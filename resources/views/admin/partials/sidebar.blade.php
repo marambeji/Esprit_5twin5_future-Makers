@@ -18,6 +18,8 @@
 <li class="sidebar-item {{ request()->routeIs('admin.deliveries.*') ? 'active' : '' }}"><a href="{{ route('admin.deliveries.index') }}" class="sidebar-link"><i class="bi bi-box-seam"></i><span>Livraisons</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.producteurs.*') ? 'active' : '' }}"><a href="{{ route('admin.producteurs.index') }}" class="sidebar-link"><i class="bi bi-person-lines-fill"></i><span>Producteurs</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.fermes.*') ? 'active' : '' }}"><a href="{{ route('admin.fermes.index') }}" class="sidebar-link"><i class="bi bi-house-door-fill"></i><span>Fermes</span></a></li>
+<li class="sidebar-item {{ request()->routeIs('admin.agriculture.*') ? 'active' : '' }}"><a href="{{ route('admin.agriculture.dashboard') }}" class="sidebar-link"><i class="bi bi-bar-chart-fill"></i><span>Tableau de bord agricole</span></a></li>
+<li class="sidebar-item {{ request()->routeIs('admin.agriculture.map') ? 'active' : '' }}"><a href="{{ route('admin.agriculture.map') }}" class="sidebar-link"><i class="bi bi-geo-alt-fill"></i><span>Carte des fermes</span></a></li>
 <li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#parcours" class="sidebar-link"><i class="bi bi-truck"></i><span>Parcours alimentaire</span></a></li>
 <li class="sidebar-item {{ request()->routeIs('admin.certifications.*') ? 'active' : '' }}"><a href="{{ route('admin.certifications.index') }}" class="sidebar-link"><i class="bi bi-patch-check-fill"></i><span>Certifications</span></a></li>
 <li class="sidebar-item"><a href="{{ route('admin.dashboard') }}#environnement" class="sidebar-link"><i class="bi bi-tree-fill"></i><span>Environnement</span></a></li>

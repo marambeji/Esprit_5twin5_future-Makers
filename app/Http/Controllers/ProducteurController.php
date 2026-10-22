@@ -4,34 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProducteurRequest;
 use App\Models\Producteur;
+use App\Services\AgriculturalDataQualityService;
+use App\Services\AgriculturalListingService;
 use Illuminate\Http\Request;
 
 class ProducteurController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, AgriculturalListingService $listing, AgriculturalDataQualityService $dataQuality)
     {
-        $filters = $request->only(['q', 'fermes_count']);
-
-        $producteurs = Producteur::withCount('fermes')
-            ->when($filters['q'] ?? null, function ($query, $q) {
-                $query->where(function ($query) use ($q) {
-                    $query->where('nom', 'like', '%' . $q . '%')
-                          ->orWhere('prenom', 'like', '%' . $q . '%')
-                          ->orWhere('email', 'like', '%' . $q . '%');
-                });
-            })
-            ->when($filters['fermes_count'] ?? null, function ($query, $filter) {
-                if ($filter === '0') {
-                    $query->doesntHave('fermes');
-                } elseif ($filter === '1-3') {
-                    $query->has('fermes', '>=', 1)->has('fermes', '<=', 3);
-                } elseif ($filter === '4+') {
-                    $query->has('fermes', '>=', 4);
-                }
-            })
-            ->orderBy('nom')
+        $filters = $request->only(['q', 'fermes_count', 'sort', 'direction']);
+        $producteurs = $listing->producteurs($request)
             ->paginate(10)
             ->withQueryString();
+
+        $producteurs->getCollection()->each(fn (Producteur $producteur) => $producteur->setAttribute('data_quality', $dataQuality->forProducteur($producteur)));
 
         return view('admin.producteurs.index', compact('producteurs', 'filters'));
     }
@@ -48,11 +34,12 @@ class ProducteurController extends Controller
         return to_route('admin.producteurs.show', $producteur)->with('success', 'Producteur créé.');
     }
 
-    public function show(Producteur $producteur)
+    public function show(Producteur $producteur, AgriculturalDataQualityService $dataQuality)
     {
         return view('admin.producteurs.show', [
             'producteur' => $producteur,
             'fermes'     => $producteur->fermes()->orderBy('nom')->paginate(10),
+            'dataQuality' => $dataQuality->forProducteur($producteur),
         ]);
     }
 

@@ -1,38 +1,20 @@
 @extends('admin.layouts.layout')
 @section('title', 'Fermes — NutriTrace')
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4"><h1 class="h3">Fermes</h1><a class="btn btn-primary" href="{{ route('admin.fermes.create') }}">Ajouter une ferme</a></div>
-
-<div class="card mb-4">
-    <div class="card-body">
-        <form id="filter-form" method="GET" action="{{ route('admin.fermes.index') }}" class="row gx-3 gy-2 align-items-center">
-            <div class="col-sm-3">
-                <input type="text" class="form-control" name="q" placeholder="Nom ou localisation..." value="{{ request('q') }}" oninput="clearTimeout(this.timer); this.timer = setTimeout(() => { document.getElementById('filter-form').submit(); }, 500);">
-            </div>
-            <div class="col-sm-3">
-                <select name="producteur_id" class="form-select" onchange="document.getElementById('filter-form').submit();">
-                    <option value="">Tous les producteurs</option>
-                    @foreach($producteurs as $prod)
-                        <option value="{{ $prod->id }}" @selected(request('producteur_id') == $prod->id)>{{ $prod->nom }} {{ $prod->prenom }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-sm-2">
-                <input type="number" step="0.01" class="form-control" name="superficie_min" placeholder="Superficie min" value="{{ request('superficie_min') }}" oninput="clearTimeout(this.timer); this.timer = setTimeout(() => { document.getElementById('filter-form').submit(); }, 800);">
-            </div>
-            <div class="col-sm-2">
-                <input type="number" step="0.01" class="form-control" name="superficie_max" placeholder="Superficie max" value="{{ request('superficie_max') }}" oninput="clearTimeout(this.timer); this.timer = setTimeout(() => { document.getElementById('filter-form').submit(); }, 800);">
-            </div>
-            <div class="col-auto">
-                <a href="{{ route('admin.fermes.index') }}" class="btn btn-outline-secondary">Réinitialiser</a>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="card"><div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Nom</th><th>Producteur</th><th>Localisation</th><th>Superficie (ha)</th><th>Actions</th></tr></thead><tbody>
+<div class="d-flex justify-content-between align-items-center mb-4"><h1 class="h3">Fermes</h1><div class="d-flex gap-2"><a class="btn btn-outline-secondary" href="{{ route('admin.fermes.export', request()->query()) }}">Exporter CSV</a><a class="btn btn-primary" href="{{ route('admin.fermes.create') }}">Ajouter une ferme</a></div></div>
+<div class="card mb-4"><div class="card-body">
+<form id="filter-form" method="GET" action="{{ route('admin.fermes.index') }}" class="row gx-3 gy-2 align-items-center">
+<div class="col-lg-3"><input type="search" class="form-control" name="q" placeholder="Ferme, localisation ou producteur..." value="{{ request('q') }}" oninput="clearTimeout(this.timer); this.timer = setTimeout(() => { document.getElementById('filter-form').submit(); }, 500);"></div>
+<div class="col-lg-2"><select name="producteur_id" class="form-select" onchange="document.getElementById('filter-form').submit();"><option value="">Tous les producteurs</option>@foreach($producteurs as $prod)<option value="{{ $prod->id }}" @selected(request('producteur_id') == $prod->id)>{{ $prod->nom }} {{ $prod->prenom }}</option>@endforeach</select></div>
+<div class="col-lg-2"><input type="number" step="0.01" class="form-control" name="superficie_min" placeholder="Superficie min" value="{{ request('superficie_min') }}" oninput="clearTimeout(this.timer); this.timer = setTimeout(() => { document.getElementById('filter-form').submit(); }, 800);"></div>
+<div class="col-lg-2"><input type="number" step="0.01" class="form-control" name="superficie_max" placeholder="Superficie max" value="{{ request('superficie_max') }}" oninput="clearTimeout(this.timer); this.timer = setTimeout(() => { document.getElementById('filter-form').submit(); }, 800);"></div>
+<div class="col-lg-2"><select name="sort" class="form-select" onchange="document.getElementById('filter-form').submit();"><option value="nom" @selected(request('sort', 'nom') === 'nom')>Tri : nom</option><option value="localisation" @selected(request('sort') === 'localisation')>Tri : localisation</option><option value="superficie" @selected(request('sort') === 'superficie')>Tri : superficie</option></select></div>
+<div class="col-lg-1"><select name="direction" class="form-select" aria-label="Sens du tri" onchange="document.getElementById('filter-form').submit();"><option value="asc" @selected(request('direction', 'asc') === 'asc')>↑</option><option value="desc" @selected(request('direction') === 'desc')>↓</option></select></div>
+<div class="col-auto"><a href="{{ route('admin.fermes.index') }}" class="btn btn-outline-secondary">Réinitialiser</a></div>
+</form></div></div>
+<div class="card"><div class="card-body"><div class="table-responsive"><table class="table align-middle"><thead><tr><th>Nom</th><th>Producteur</th><th>Localisation</th><th>Superficie (ha)</th><th>Qualité</th><th>Actions</th></tr></thead><tbody>
 @forelse ($fermes as $ferme)
-<tr><td><a href="{{ route('admin.fermes.show', $ferme) }}">{{ $ferme->nom }}</a></td><td><a href="{{ route('admin.producteurs.show', $ferme->producteur) }}">{{ $ferme->producteur->nom }} {{ $ferme->producteur->prenom }}</a></td><td>{{ $ferme->localisation }}</td><td>{{ $ferme->superficie ?? '—' }}</td><td class="d-flex gap-2"><a class="btn btn-sm btn-outline-primary" href="{{ route('admin.fermes.edit', $ferme) }}">Modifier</a><form method="POST" action="{{ route('admin.fermes.destroy', $ferme) }}" onsubmit="return confirm('Supprimer cette ferme ?');"> @csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger">Supprimer</button></form></td></tr>
-@empty <tr><td colspan="5">Aucune ferme. Créez votre première ferme.</td></tr> @endforelse
+<tr><td><a href="{{ route('admin.fermes.show', $ferme) }}">{{ $ferme->nom }}</a></td><td><a href="{{ route('admin.producteurs.show', $ferme->producteur) }}">{{ $ferme->producteur->nom }} {{ $ferme->producteur->prenom }}</a></td><td>{{ $ferme->localisation }}</td><td>{{ $ferme->superficie ?? '—' }}</td><td><span class="badge bg-{{ $ferme->data_quality['score'] === 100 ? 'success' : 'warning' }}">{{ $ferme->data_quality['score'] }} %</span></td><td><div class="d-flex flex-wrap gap-2"><a class="btn btn-sm btn-outline-secondary" href="{{ route('admin.fermes.show', $ferme) }}">Consulter</a><a class="btn btn-sm btn-outline-primary" href="{{ route('admin.fermes.edit', $ferme) }}">Modifier</a><form method="POST" action="{{ route('admin.fermes.destroy', $ferme) }}" onsubmit="return confirm('Supprimer cette ferme ?');">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger">Supprimer</button></form></div></td></tr>
+@empty <tr><td colspan="6">Aucune ferme ne correspond aux critères.</td></tr> @endforelse
 </tbody></table></div>{{ $fermes->links() }}</div></div>
 @endsection
