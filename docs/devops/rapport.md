@@ -126,19 +126,19 @@ Autres réglages à vérifier lors de la création du service : health check `/u
 
 ```mermaid
 sequenceDiagram
-    participant GH as GitHub main
+    participant GH as GitHub deployment branch
     participant CI as GitHub Actions
     participant R as Render build/deploy
     participant PG as Render PostgreSQL
     GH->>CI: PR/push (après publication)
     CI->>CI: Composer + npm ci + Vite + tests SQLite mémoire
-    GH->>R: branche approuvée, déploiement manuel/auto à décider
-    R->>R: construire l'image; démarrer Nginx + PHP-FPM
+    GH->>R: push to linked Render branch (Auto-Deploy setting to confirm)
+    R->>R: build image; entrypoint waits for PostgreSQL, migrates, starts Nginx/PHP-FPM
     R->>PG: connexion via DB_URL
-    Note over R,PG: Migration uniquement après sauvegarde, revue et approbation explicite
+    Note over R,PG: migrations run at startup; abort if PostgreSQL is unavailable or migration fails
 ```
 
-Le démarrage actuel ne migre pas la base. Render propose une commande pré-déploiement pour les migrations sur les services payants; cette commande s’exécute séparément du conteneur applicatif actif. Elle ne doit être configurée qu’après revue et approbation des migrations et de la procédure de sauvegarde. Aucune commande de déploiement ou migration automatique n’a été ajoutée.
+Cette description est un instantané historique et ne décrit plus le démarrage au HEAD `5d3b4a4`. Actuellement, `docker/entrypoint.sh` attend PostgreSQL avec un nombre borné de tentatives, exécute `php artisan migrate --database=pgsql --force --no-interaction`, puis configure Nginx et lance Supervisor. Si PostgreSQL reste indisponible ou si les migrations échouent, le conteneur s’arrête avant le démarrage des services web. Aucun pré-déploiement Render ni lancement concurrent de migrations n’est ajouté par la phase 3.
 
 ## 10. Statut, coûts et limites
 
@@ -162,6 +162,32 @@ Après autorisation et déploiement seulement : pipeline GitHub Actions réussi;
 ## 12. Conclusion
 
 Les éléments locaux nécessaires à une démonstration sont vérifiés : image démarrable, endpoint health, assets accessibles, tests PHP et build Vite réussis, migrations appliquées sur PostgreSQL 18 temporaire. Avant toute mise en production, il reste à publier le workflow après approbation, choisir les offres payantes ou limites acceptables, configurer PostgreSQL et la persistance des uploads, corriger/vérifier la confiance proxy HTTPS, saisir les secrets dans Render et valider la stratégie de migrations. Aucun push, service Render, coût, migration de production ou smoke test public n’a été effectué.
+
+## Phase 3 — état courant au HEAD `5d3b4a4`
+
+Cette section décrit la configuration vérifiée pour la phase 3. Les chiffres et validations des sections précédentes sont des résultats historiques de leurs dates respectives et ne sont pas réaffirmés ici.
+
+### CI GitHub Actions
+
+Le workflow existant `.github/workflows/ci.yml` est étendu, sans second workflow. Il se déclenche pour les pull requests vers `main` et les pushes vers `main` ou `feature/**`. Il conserve Composer, Node 22, `npm ci --ignore-scripts`, le build Vite et PHPUnit avec SQLite `:memory:`; les pilotes cache/session/queue restent isolés et aucun secret de production n’est requis. Les actions sont épinglées sur leurs SHA complets, le jeton checkout n’est pas persisté et les permissions restent limitées à `contents: read`.
+
+Le job ajoute `php -l` sur le code PHP du projet (hors `vendor` et `bootstrap/cache`), `git diff --check` sur le patch poussé ou la diff de PR et une construction locale de l’image Docker. Cette construction ne pousse aucune image et ne déploie pas l’application. Le workflow n’a pas été exécuté sur GitHub dans cette phase; ses résultats locaux sont rapportés séparément.
+
+### Runtime et observabilité Render
+
+L’architecture demeure une image multi-stage avec Nginx, PHP-FPM et Supervisor. L’entrypoint effectue la vérification PostgreSQL bornée, applique les migrations en mode `--force`, puis lance Nginx/PHP-FPM via Supervisor. Aucun changement de privilèges, de migrations, de déploiement, de persistance ou de variables Render n’est effectué ici.
+
+Render doit utiliser le health-check path `/up`, fourni par Laravel dans `bootstrap/app.php`; aucune route de santé supplémentaire n’est nécessaire. Le service public n’a pas été sollicité dans cette phase, donc l’endpoint en production n’est pas vérifié. Configurer manuellement dans Render `LOG_CHANNEL=stderr` pour envoyer les journaux Laravel vers stderr et `APP_DEBUG=false` en production; aucune variable d’environnement Render n’a été changée. Consulter les logs de build et de runtime, l’état du health check, les métriques CPU/mémoire/requêtes disponibles selon le plan et activer les notifications Render de déploiement en échec ou service unhealthy. Un moniteur externe gratuit à intervalle limité peut surveiller `/up`, sans être une dépendance de l’application.
+
+### Déploiement
+
+Aucun workflow de déploiement supplémentaire n’est créé et aucun déploiement n’est déclenché. La branche actuellement liée au service Render doit être confirmée dans le tableau de bord avant toute publication; Auto-Deploy peut être configuré manuellement pour attendre les vérifications CI réussies si l’option est prise en charge pour le service et son plan. La branche de déploiement, les références Git et le suivi local ne sont pas modifiés.
+
+### Validation locale de la phase
+
+Validé localement : parsing YAML/structure du workflow (Symfony YAML), `composer validate --no-check-publish` (code 0), `php -l` sur 173 fichiers PHP (code 0), `php artisan test --compact` (163 tests, 1 336 assertions, code 0), `npm run build` (code 0), `docker info` (serveur disponible, code 0), `docker build --tag nutritrace-ci:phase3 .` (code 0) et `git diff --check` (code 0). Le PHPUnit XML a été vérifié : `DB_CONNECTION=sqlite`, `DB_DATABASE=:memory:`, `DB_URL` vide, cache/session en mémoire et queue synchrone; les variables DB du processus PowerShell étaient absentes. Pas de migration ni seed exécuté.
+
+Non validé à distance : le workflow GitHub n’a pas été déclenché/exécuté sur GitHub, l’endpoint Render `/up` n’a pas été appelé, et aucun déploiement ou réglage du tableau de bord Render n’a été effectué.
 
 ## Références Render consultées
 

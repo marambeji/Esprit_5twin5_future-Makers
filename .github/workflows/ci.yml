@@ -4,7 +4,9 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'feature/**'
 
 permissions:
   contents: read
@@ -36,6 +38,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up PHP
         uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
@@ -58,6 +61,25 @@ jobs:
 
       - name: Validate Composer files
         run: composer validate --no-check-publish
+
+      - name: Check PHP syntax
+        run: |
+          find app bootstrap config database public routes tests -type f -name '*.php' \
+            ! -path 'bootstrap/cache/*' -print0 | xargs -0 -r -n1 php -l
+          php -l artisan
+
+      - name: Check patch whitespace
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            git diff --check "$PR_BASE_SHA...$GITHUB_SHA"
+          elif [ -n "$PUSH_BEFORE_SHA" ] && ! [[ "$PUSH_BEFORE_SHA" =~ ^0+$ ]]; then
+            git diff --check "$PUSH_BEFORE_SHA" "$GITHUB_SHA"
+          else
+            git diff --check "$GITHUB_SHA^!"
+          fi
 
       - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
@@ -85,3 +107,6 @@ jobs:
 
       - name: Run Laravel tests
         run: php artisan test --compact
+
+      - name: Validate Docker image build
+        run: docker build --tag nutritrace-ci:${GITHUB_SHA} .
