@@ -1,0 +1,87 @@
+name: Laravel CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      APP_ENV: testing
+      APP_DEBUG: "false"
+      APP_URL: http://localhost
+      DB_CONNECTION: sqlite
+      DB_DATABASE: ":memory:"
+      DB_URL: ""
+      CACHE_STORE: array
+      SESSION_DRIVER: array
+      QUEUE_CONNECTION: sync
+      MAIL_MAILER: array
+      LOG_CHANNEL: stderr
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@2.37.2
+        with:
+          php-version: "8.3"
+          extensions: bcmath, curl, dom, fileinfo, mbstring, pdo_sqlite, sqlite3, xml
+          tools: composer:v2
+          coverage: none
+          cache: composer
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Generate temporary test application key
+        run: php -r 'echo "APP_KEY=base64:".base64_encode(random_bytes(32)).PHP_EOL;' >> "$GITHUB_ENV"
+
+      - name: Validate Composer files
+        run: composer validate --no-check-publish
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Verify isolated PHPUnit database
+        run: |
+          php -r '
+          $config = simplexml_load_file("phpunit.xml");
+          $values = [];
+          foreach ($config->php->env as $entry) {
+              $values[(string) $entry["name"]] = (string) $entry["value"];
+          }
+          if (($values["DB_CONNECTION"] ?? null) !== "sqlite" || ($values["DB_DATABASE"] ?? null) !== ":memory:") {
+              fwrite(STDERR, "PHPUnit must use in-memory SQLite.\n");
+              exit(1);
+          }
+          echo "PHPUnit uses isolated in-memory SQLite.\n";
+          '
+
+      - name: Install frontend dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Run Laravel tests
+        run: php artisan test --compact
